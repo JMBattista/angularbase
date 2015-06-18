@@ -17,7 +17,7 @@ gulp.task('styles:watch', ['css:watch']);
 
 /** Standard Tasks */
 
-gulp.task('prep', ['html', 'js', 'styles', 'assets']);
+gulp.task('build', ['html', 'js', 'styles', 'assets']);
 
 gulp.task('watch', ['html:watch', 'js:watch', 'styles:watch', 'assets:watch']);
 

@@ -18,13 +18,24 @@ module.exports = function() {
     var config = {
       // Client source
       client: client,
-      clientApp: clientApp,
-      source: [clientApp + "**/*.module.js", "!"+clientApp + "**/*.spec.js", clientApp + "**/*.js"],
+      index: client + 'index.html',
+      source: [
+            clientApp + '**/*.module.js',
+            clientApp + '**/*.js',
+            '!' + clientApp + '**/*.spec.js'
+        ],
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
       
       // Test
       specs: clientApp + "**/*.spec.js",
+      
+      // Vendor sources
+      bower: bower,
+      packages: [
+        './package.json',
+        './bower.json'
+      ],
       
       // Destination
       dest: dest,
@@ -32,6 +43,15 @@ module.exports = function() {
       // Server
       server: server,
     }
+    
+    config.getWiredepDefaultOptions = function() {
+        var options = {
+            bowerJson: config.bower.json,
+            directory: config.bower.directory,
+            ignorePath: config.bower.ignorePath
+        };
+        return options;
+    };
     
     return config;
 };
