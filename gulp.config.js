@@ -4,6 +4,7 @@ module.exports = function() {
     var clientApp = client + 'app/';
     var report = './report/';
     var root = './';
+    var index = client + 'index.html'
     var specRunnerFile = 'specs.html';
     var dest = './.dist/';
     var wiredep = require('wiredep');
@@ -11,6 +12,8 @@ module.exports = function() {
     var bower = {
         json: require('./bower.json'),
         directory: './bower_components/',
+        source: './bower_components/**/*.js',
+        style: './bower_components/**/*.css',
         ignorePath: '../..'
     };
     var nodeModules = 'node_modules';
@@ -18,11 +21,15 @@ module.exports = function() {
     var config = {
       // Client source
       client: client,
-      index: client + 'index.html',
+      index: index,
       source: [
             clientApp + '**/*.module.js',
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.js'
+        ],
+      html: [
+            index,
+            clientApp + '**/*.html',
         ],
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
