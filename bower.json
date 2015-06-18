@@ -1,0 +1,22 @@
+{
+  "name": "Compass",
+  "version": "1.0.0",
+  "authors": [
+    "jbattista@expedia.com"
+  ],
+  "description": "Server Build Request Portal",
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.1"
+  }
+}
