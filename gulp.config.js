@@ -27,10 +27,7 @@ module.exports = function() {
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.js'
         ],
-      html: [
-            index,
-            clientApp + '**/*.html',
-        ],
+      html: clientApp + '**/*.html',
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
       

@@ -13,23 +13,18 @@ var minifyCss  = require('gulp-minify-css');
 // Define the task for copying html
 gulp.task('html:index', function () {
     var assets = useref.assets({searchPath: './'});
-    var jsFilter = filter("**/*.js");
-    var cssFilter = filter("**/*.css");
+    var jsFilter = filter("lib.js");
+    var cssFilter = filter("lib.css");
   
   
     return gulp.src(config.index)
         .pipe(plumber())
         .pipe(assets)
         .pipe(jsFilter)
-        .pipe(sourcemaps.init())
-        // .pipe(ngAnnotate())
         .pipe(uglify())
-        .pipe(sourcemaps.write())
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
-        .pipe(sourcemaps.init())
         .pipe(minifyCss())
-        .pipe(sourcemaps.write())
         .pipe(cssFilter.restore())
         .pipe(assets.restore())
         .pipe(useref())
