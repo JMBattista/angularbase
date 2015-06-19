@@ -15,7 +15,7 @@ gulp.task('less', function () {
         .pipe(plumber())
         .pipe(autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(less())
-        .pipe(concat('style.css'))
+        .pipe(concat('app.css'))
         .pipe(minifyCss())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + "styles/"))

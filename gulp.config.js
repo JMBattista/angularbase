@@ -36,6 +36,7 @@ module.exports = function() {
       specs: [clientApp + '**/*.spec.js'],
   
       // Vendor sources
+      fonts: bower.directory + 'font-awesome/fonts/**/*.*',
       bower: bower,
       packages: [
         './package.json',
