@@ -17,11 +17,11 @@ gulp.task('lint', function(){
 });
 
 gulp.task('js', function () {
-    return gulp.src(config.bower.source)
+    return gulp.src(config.source)
         .pipe(sourcemaps.init())
         .pipe(plumber())
+        .pipe(ngAnnotate())
         .pipe(concat('app.js'))
-        // .pipe(ngAnnotate())
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + 'js/'))
