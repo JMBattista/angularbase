@@ -51,7 +51,7 @@ module.exports = function() {
       server: server,
     }
     
-    config.getWiredepDefaultOptions = function() {
+    config.wiredep = function() {
         var options = {
             bowerJson: config.bower.json,
             directory: config.bower.directory,
