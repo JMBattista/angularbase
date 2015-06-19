@@ -10,9 +10,13 @@
   "author": "John Battista",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.13.1",
+    "express": "^4.12.4",
     "koa": "^0.20.0",
     "koa-router": "^4.3.2",
-    "koa-static": "^1.4.9"
+    "koa-static": "^1.4.9",
+    "morgan": "^1.6.0",
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
