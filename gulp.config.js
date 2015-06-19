@@ -32,8 +32,9 @@ module.exports = function() {
       assets: client + "/assets/**/*.*",
       
       // Test
-      specs: clientApp + "**/*.spec.js",
-      
+      specHelpers: [client + 'test-helpers/*.js'],
+      specs: [clientApp + '**/*.spec.js'],
+  
       // Vendor sources
       bower: bower,
       packages: [
@@ -48,7 +49,15 @@ module.exports = function() {
       server: server,
     }
     
-    config.wiredep = function() {
+    config.wiredep = getWiredepOptions;
+    
+    config.karma = getKarmaOptions();
+    
+    return config;
+    
+    ////////////////
+
+    function getWiredepOptions() {
         var options = {
             bowerJson: config.bower.json,
             directory: config.bower.directory,
@@ -57,5 +66,27 @@ module.exports = function() {
         return options;
     };
     
-    return config;
+     function getKarmaOptions() {
+        var options = {
+            files: [].concat(
+                bowerFiles,
+                config.specHelpers,
+                clientApp + '**/*.module.js',
+                clientApp + '**/*.js'
+            ),
+            exclude: [],
+            coverage: {
+                dir: report + 'coverage',
+                reporters: [
+                    // reporters not supporting the `file` property
+                    {type: 'html', subdir: 'report-html'},
+                    {type: 'lcov', subdir: 'report-lcov'},
+                    {type: 'text-summary'} //, subdir: '.', file: 'text-summary.txt'}
+                ]
+            },
+            preprocessors: {}
+        };
+        options.preprocessors[clientApp + '**/!(*.spec)+(.js)'] = ['coverage'];
+        return options;
+    }
 };
