@@ -34,7 +34,7 @@ gulp.task('html:index', function () {
 
 gulp.task('html:partials', function () {
     return gulp.src(config.html)
-        .pipe(gulp.dest(config.dest))
+        .pipe(gulp.dest(config.dest + "app/"))
         .pipe(livereload());
 });
 
