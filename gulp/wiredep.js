@@ -4,13 +4,13 @@ var config = require('../gulp.config')();
 var inject = require('gulp-inject');
 
 
-gulp.task('wiredep', ['wiredep:app']);
+gulp.task('wiredep', ['wiredep:script', 'wiredep:style']);
 
-gulp.task('wiredep:lib', function() {
+gulp.task('wiredep:style', function() {
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
     
-   var sources = gulp.src(config.source, {read: false});
+   var sources = gulp.src(config.client + "**/*.css", {read: false});
 
    return gulp
         .src(config.index)
@@ -20,7 +20,7 @@ gulp.task('wiredep:lib', function() {
 });
 
 
-gulp.task('wiredep:app', function() {
+gulp.task('wiredep:script', function() {
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
     
