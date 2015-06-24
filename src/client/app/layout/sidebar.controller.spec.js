@@ -3,8 +3,8 @@ describe('layout', function() {
     describe('sidebar', function() {
         var controller;
         var views = {
-            dashboard: 'app/dashboard/dashboard.html',
-            customers: 'app/customers/customers.html'
+            dashboard: '/dashboard/dashboard.html',
+            customers: '/customers/customers.html'
         };
 
         beforeEach(function() {

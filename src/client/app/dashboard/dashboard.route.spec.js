@@ -2,7 +2,7 @@
 describe('dashboard routes', function () {
     describe('state', function () {
         var controller;
-        var view = 'app/dashboard/dashboard.html';
+        var view = '/dashboard/dashboard.html';
 
         beforeEach(function() {
             module('app.dashboard', bard.fakeToastr);
