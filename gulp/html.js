@@ -9,6 +9,8 @@ var livereload = require('gulp-livereload');
 var using = require('gulp-using');
 var filter = require('gulp-filter');
 var minifyCss  = require('gulp-minify-css');
+var minifyHTML = require('gulp-minify-html');
+var templateCache = require('gulp-angular-templatecache');
 
 // Define the task for copying html
 gulp.task('html:index', function () {
@@ -34,7 +36,9 @@ gulp.task('html:index', function () {
 
 gulp.task('html:partials', function () {
     return gulp.src(config.html)
-        .pipe(gulp.dest(config.dest + "app/"))
+        .pipe(templateCache({standalone:true, root: config.templateRoot}))
+        // .pipe(minifyHTML({empty:true}))
+        .pipe(gulp.dest(config.dest + 'js/'))
         .pipe(livereload());
 });
 

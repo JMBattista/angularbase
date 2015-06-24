@@ -27,7 +27,9 @@ module.exports = function() {
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.js'
         ],
+      // Html
       html: clientApp + '**/*.html',
+      templateRoot: "app/",
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
       
