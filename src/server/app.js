@@ -3,7 +3,6 @@
 
 var koa = require('koa');
 var fs = require('fs');
-var fs = require('fs');
 var path = require('path');
 var extname = path.extname;
 
@@ -36,9 +35,10 @@ app.use(function *pageNotFound(next){
       this.type = 'text';
       this.body = 'Page Not Found';
   }
-})
+});
 
 app.use(require('koa-static')('.dist', {}));
+app.use(require('koa-static')("src/server", {}));
 
 app.use(require('koa-router')(app));
 
