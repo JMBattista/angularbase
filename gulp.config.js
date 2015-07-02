@@ -29,7 +29,7 @@ module.exports = function() {
         ],
       // Html
       html: clientApp + '**/*.html',
-      templateRoot: "/",
+      templateRoot: "/app/",
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
       

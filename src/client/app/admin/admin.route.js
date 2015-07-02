@@ -17,7 +17,7 @@
                 state: 'admin',
                 config: {
                     url: '/admin',
-                    templateUrl: '/admin/admin.html',
+                    templateUrl: '/app/admin/admin.html',
                     controller: 'AdminController',
                     controllerAs: 'vm',
                     title: 'Admin',
