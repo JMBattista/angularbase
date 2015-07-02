@@ -1,3 +1,5 @@
+/// <reference path="../../../../typings/mocha/mocha.d.ts"/>
+/// <reference path="../../../../typings/angularjs/angular-mocks.d.ts"/>
 /* jshint -W117, -W030 */
 describe('layout', function() {
     describe('sidebar', function() {

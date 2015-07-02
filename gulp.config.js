@@ -29,7 +29,14 @@ module.exports = function() {
         ],
       // Html
       html: clientApp + '**/*.html',
-      templateRoot: "/app/",
+      templateCache: {
+            file: 'templates.js',
+            options: {
+                module: 'app.core',
+                root: '/app/',
+                standAlone: false
+            }
+      },
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
       
@@ -75,7 +82,8 @@ module.exports = function() {
                 bowerFiles,
                 config.specHelpers,
                 clientApp + '**/*.module.js',
-                clientApp + '**/*.js'
+                clientApp + '**/*.js',
+                dest + 'js/' + config.templateCache.file
             ),
             exclude: [],
             coverage: {
@@ -90,6 +98,7 @@ module.exports = function() {
             preprocessors: {}
         };
         options.preprocessors[clientApp + '**/!(*.spec)+(.js)'] = ['coverage'];
+        
         return options;
     }
 };
