@@ -22,8 +22,8 @@ gulp.task('less', function () {
         .pipe(livereload());
 });
 
-gulp.task('less:watch', ['css'], function () {
+gulp.task('less:watch', ['less'], function () {
     livereload.listen();
-    gulp.watch(config.styles, ['css']);
+    gulp.watch(config.styles, ['less']);
 });
 
