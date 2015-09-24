@@ -16,19 +16,18 @@ var templateCache = require('gulp-angular-templatecache');
 // Define the task for copying html
 gulp.task('html:index', function () {
     var assets = useref.assets({searchPath: './'});
-    var jsFilter = filter("lib.js");
-    var cssFilter = filter("lib.css");
-
+    var jsFilter = filter("lib.js", { restore: true });
+    var cssFilter = filter("lib.css", { restore: true });
 
     return gulp.src(config.index)
         .pipe(plumber())
         .pipe(assets)
         .pipe(jsFilter)
         .pipe(uglify())
-        .pipe(jsFilter.restore())
+        .pipe(jsFilter.restore)
         .pipe(cssFilter)
         .pipe(minifyCss())
-        .pipe(cssFilter.restore())
+        .pipe(cssFilter.restore)
         .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest(config.dest))
