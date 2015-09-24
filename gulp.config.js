@@ -1,3 +1,5 @@
+var filter = require('gulp-filter')
+
 module.exports = function() {
     var client = './src/client/';
     var server = './src/server/';
@@ -22,11 +24,16 @@ module.exports = function() {
       // Client source
       client: client,
       index: index,
+      icon: client + "favicon.ico",
       source: [
+            clientApp + '**/*.module.ts',
             clientApp + '**/*.module.js',
+            clientApp + '**/*.ts',
             clientApp + '**/*.js',
+            '!' + clientApp + '**/*.spec.ts',
             '!' + clientApp + '**/*.spec.js'
         ],
+ 
       // Html
       html: clientApp + '**/*.html',
       templateCache: {
@@ -39,6 +46,14 @@ module.exports = function() {
       },
       styles: client + "/styles/**/*.less",
       assets: client + "/assets/**/*.*",
+ 
+      // Filters
+      filter: {
+          ts: filter('**/*.ts', { restore: true }),
+          js: filter('**/*.js', { restore: true }),
+          less: filter('**/*.less', { restore: true}),
+          css: filter('**/*.css', { restore: true})
+      },
       
       // Test
       specHelpers: [client + 'test-helpers/*.js'],
