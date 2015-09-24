@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var config = require('../gulp.config')();
+var watch = require('gulp-watch');
 var useref = require('gulp-useref');
 var uglify     = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -17,8 +18,8 @@ gulp.task('html:index', function () {
     var assets = useref.assets({searchPath: './'});
     var jsFilter = filter("lib.js");
     var cssFilter = filter("lib.css");
-  
-  
+
+
     return gulp.src(config.index)
         .pipe(plumber())
         .pipe(assets)
@@ -46,7 +47,11 @@ gulp.task('html', ['html:index', 'html:partials']);
 
 gulp.task('html:watch', ['html'], function () {
     livereload.listen();
-    gulp.watch(config.html, ['html:partials']);
-    gulp.watch([config.index, config.bower.source, config.bower.style], ['html:index']);
+    watch(config.html, function() {
+        gulp.start('html:partials');
+    });
+    watch([config.index, config.bower.source, config.bower.style], function() {
+        gulp.start('html:index')
+    });
 });
 

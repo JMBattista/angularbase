@@ -1,8 +1,7 @@
 var gulp  = require('gulp');
 var config = require('../gulp.config')();
-var clean = require('gulp-clean');
+var rimraf = require('rimraf'); 
 
-gulp.task('clean', function () {
-    return gulp.src(config.dest, {read: false})
-        .pipe(clean());
+gulp.task('clean', function (cb) {
+    rimraf(config.dest, cb);
 });

@@ -1,5 +1,6 @@
 var gulp       = require('gulp');
 var config = require('../gulp.config')();
+var watch = require('gulp-watch');
 var concat     = require('gulp-concat');
 var ngAnnotate = require('gulp-ng-annotate');
 var plumber    = require('gulp-plumber');
@@ -28,7 +29,20 @@ gulp.task('js', function () {
         .pipe(livereload());
 });
 
-gulp.task('js:watch', ['js'], function () {
+gulp.task('js-dev', function () {
+    return gulp.src(config.source)
+        .pipe(sourcemaps.init())
+        .pipe(plumber())
+        .pipe(ngAnnotate())
+        .pipe(concat('app.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.dest + 'js/'))
+        .pipe(livereload());
+});
+
+gulp.task('js:watch', ['js-dev'], function () {
     livereload.listen();
-    gulp.watch(config.source, ['js']);
+    watch(config.source, function() {
+        gulp.start('js-dev');
+    });
 });

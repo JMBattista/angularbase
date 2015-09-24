@@ -1,6 +1,7 @@
 // Define Task for compressing CSS
 var gulp       = require('gulp');
 var config = require('../gulp.config')();
+var watch = require('gulp-watch');
 var concat     = require('gulp-concat');
 var less       = require('gulp-less');
 var minifyCss  = require('gulp-minify-css');
@@ -24,6 +25,8 @@ gulp.task('less', function () {
 
 gulp.task('less:watch', ['less'], function () {
     livereload.listen();
-    gulp.watch(config.styles, ['less']);
+    watch(config.styles, function() {
+        gulp.start('less');
+    });
 });
 
