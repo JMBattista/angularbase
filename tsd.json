@@ -5,6 +5,9 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
+    "bardjs/bardjs.d.ts": {
+      "commit": "99942cab1446292c79c4328218abd37621505112"
+    },
     "jquery/jquery.d.ts": {
       "commit": "c7b1128cc9a8f5797bade826e7632b36b06a856c"
     },
