@@ -11,6 +11,7 @@ var jshint     = require('gulp-jshint');
 var tslint     = require('gulp-tslint');
 var using      = require('gulp-using');
 var tsc        = require('gulp-typescript');
+var babel      = require('gulp-babel');
 var tsProject  = tsc.createProject('tsconfig.json');
 
 // lints all JS files in dev/js
@@ -25,13 +26,14 @@ gulp.task('lint', function(){
         .pipe(tslint.reporter('default'));
 });
 
-gulp.task('js', function () {    
+gulp.task('js', function () {
     return gulp.src(config.source)
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(config.filter.ts)
         .pipe(tsc(tsProject))
         .pipe(config.filter.ts.restore)
+        .pipe(babel())
         .pipe(ngAnnotate())
         .pipe(concat('app.js'))
         .pipe(uglify())
@@ -47,6 +49,7 @@ gulp.task('js-dev', function () {
         .pipe(config.filter.ts)
         .pipe(tsc(tsProject))
         .pipe(config.filter.ts.restore)
+        .pipe(babel())
         .pipe(ngAnnotate())
         .pipe(concat('app.js'))
         .pipe(sourcemaps.write())
