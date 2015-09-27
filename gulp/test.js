@@ -1,25 +1,12 @@
 // Define Task for 'REV'
-var gulp = require('gulp');
-var config = require('../gulp.config')();
-var jshint = require('gulp-jshint');
-var jscs = require('gulp-jscs');
-var karma = require('gulp-karma');
-
-/**
- * vet the code and create coverage report
- * @return {Stream}
- */
-gulp.task('vet', function() {
-    return gulp
-        .src(config.source)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish', {verbose: true}))
-        .pipe(jshint.reporter('fail'))
-        .pipe(jscs());
-});
+var gulp       = require('gulp');
+var watch      = require('gulp-watch');
+var config     = require('../gulp.config')();
+var jshint     = require('gulp-jshint');
+var karma      = require('gulp-karma');
 
 
-gulp.task('test', ['vet'], function() {
+gulp.task('test', ['lint'], function() {
     // Be sure to return the stream
     // NOTE: Using the fake './foobar' so as to run the files
     // listed in karma.conf.js INSTEAD of what was passed to
@@ -36,6 +23,8 @@ gulp.task('test', ['vet'], function() {
         });
 });
 
-gulp.task('autotest', function() {
-    return gulp.watch(config.source, ['test']);
+gulp.task('autotest', ['test'], function() {
+    watch(config.source, function() {
+        gulp.start('test');
+    });
 });

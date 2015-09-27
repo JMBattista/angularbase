@@ -33,7 +33,7 @@ module.exports = function() {
             '!' + clientApp + '**/*.spec.ts',
             '!' + clientApp + '**/*.spec.js'
         ],
- 
+        
       // Html
       html: clientApp + '**/*.html',
       templateCache: {
@@ -44,21 +44,21 @@ module.exports = function() {
                 standAlone: false
             }
       },
-      styles: client + "/styles/**/*.less",
+      styles: [client + "/styles/**/*.css", client + "/styles/**/*.less"],
       assets: client + "/assets/**/*.*",
- 
+
       // Filters
       filter: {
-          ts: filter('**/*.ts', { restore: true }),
-          js: filter('**/*.js', { restore: true }),
-          less: filter('**/*.less', { restore: true}),
-          css: filter('**/*.css', { restore: true})
+          ts: function () { return filter('**/*.ts', { restore: true }) },
+          js: function () { return filter('**/*.js', { restore: true }) },
+          less: function() { return filter('**/*.less', { restore: true}) },
+          css: function() { return filter('**/*.css', { restore: true}) }
       },
-      
+
       // Test
       specHelpers: [client + 'test-helpers/*.js'],
       specs: [clientApp + '**/*.spec.js'],
-  
+
       // Vendor sources
       fonts: bower.directory + 'font-awesome/fonts/**/*.*',
       bower: bower,
@@ -66,20 +66,20 @@ module.exports = function() {
         './package.json',
         './bower.json'
       ],
-      
+
       // Destination
       dest: dest,
-      
+
       // Server
       server: server,
     }
-    
+
     config.wiredep = getWiredepOptions;
-    
+
     config.karma = getKarmaOptions();
-    
+
     return config;
-    
+
     ////////////////
 
     function getWiredepOptions() {
@@ -90,7 +90,7 @@ module.exports = function() {
         };
         return options;
     };
-    
+
      function getKarmaOptions() {
         var options = {
             files: [].concat(
@@ -113,7 +113,7 @@ module.exports = function() {
             preprocessors: {}
         };
         options.preprocessors[clientApp + '**/!(*.spec)+(.js)'] = ['coverage'];
-        
+
         return options;
     }
 };
