@@ -33,7 +33,7 @@ module.exports = function() {
             '!' + clientApp + '**/*.spec.ts',
             '!' + clientApp + '**/*.spec.js'
         ],
-        
+
       // Html
       html: clientApp + '**/*.html',
       templateCache: {
@@ -110,7 +110,9 @@ module.exports = function() {
                     {type: 'text-summary'} //, subdir: '.', file: 'text-summary.txt'}
                 ]
             },
-            preprocessors: {}
+            preprocessors: {
+                'src/**/*.js': ["babel"]
+            }
         };
         options.preprocessors[clientApp + '**/!(*.spec)+(.js)'] = ['coverage'];
 

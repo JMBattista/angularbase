@@ -48,6 +48,7 @@
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.0.1",
     "karma": "^0.12.37",
+    "karma-babel-preprocessor": "^5.2.2",
     "karma-chai": "^0.1.0",
     "karma-chai-sinon": "^0.1.5",
     "karma-chrome-launcher": "^0.2.0",
