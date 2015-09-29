@@ -1,4 +1,6 @@
 {
+    "esnext": true, // ES6 support
+
     "excludeFiles": ["node_modules/**", "bower_components/**"],
 
     "requireCurlyBraces": [
