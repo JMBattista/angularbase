@@ -37,7 +37,7 @@ gulp.task('html:index', function () {
 gulp.task('html:partials', function () {
     return gulp.src(config.html)
         .pipe(templateCache(config.templateCache.file, config.templateCache.options))
-        // .pipe(minifyHTML({empty:true}))
+        .pipe(minifyHTML({empty:true}))
         .pipe(gulp.dest(config.dest + 'js/'))
         .pipe(livereload());
 });
