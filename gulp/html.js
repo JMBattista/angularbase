@@ -14,8 +14,22 @@ var gulp = require('gulp'),
     minifyHTML = require('gulp-minify-html'),
     templateCache = require('gulp-angular-templatecache');
 
-// Define the task for copying html
-gulp.task('html:index', function () {
+gulp.task('html', function() {
+    processIndex();
+    processPartials();
+});
+
+gulp.task('html:watch', ['html'], function () {
+    livereload.listen();
+    watch(config.html, function() {
+        processPartials();
+    });
+    watch([config.index, config.bower.source, config.bower.style], function() {
+        processIndex();
+    });
+});
+
+function processIndex() {
     var assets = useref.assets({searchPath: './'});
 
     return gulp.src(config.index)
@@ -27,15 +41,15 @@ gulp.task('html:index', function () {
         .pipe(useref())
         .pipe(gulp.dest(config.dest))
         .pipe(livereload());
-});
+}
 
-gulp.task('html:partials', function () {
+function processPartials() {
     return gulp.src(config.html)
         .pipe(getHtmlMinify())
         .pipe(templateCache(config.templateCache.file, config.templateCache.options))
         .pipe(gulp.dest(config.dest + 'js/'))
         .pipe(livereload());
-});
+}
 
 function getHtmlMinify() {
     return minifyHTML({
@@ -44,16 +58,3 @@ function getHtmlMinify() {
                 quotes:true,
                 });
 }
-
-gulp.task('html', ['html:index', 'html:partials']);
-
-gulp.task('html:watch', ['html'], function () {
-    livereload.listen();
-    watch(config.html, function() {
-        gulp.start('html:partials');
-    });
-    watch([config.index, config.bower.source, config.bower.style], function() {
-        gulp.start('html:index')
-    });
-});
-
