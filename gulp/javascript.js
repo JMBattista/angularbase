@@ -14,6 +14,8 @@ var using      = require('gulp-using');
 var tsc        = require('gulp-typescript');
 var babel      = require('gulp-babel');
 var tsProject  = tsc.createProject('tsconfig.json');
+var cached = require('gulp-cached');
+var remember = require('gulp-remember');
 
 var filter = require('gulp-filter');
 
@@ -25,14 +27,14 @@ gulp.task('lint', function(){
 	return gulp.src(config.source)
         .pipe(plumber())
         .pipe(js)
-	    .pipe(jshint())
-	    .pipe(jshint.reporter('jshint-stylish', {verbose: true}))
-        .pipe(jshint.reporter('fail'))
-        .pipe(jscs())
+            .pipe(jshint())
+            .pipe(jshint.reporter('jshint-stylish', {verbose: true}))
+            .pipe(jshint.reporter('fail'))
+            .pipe(jscs())
         .pipe(js.restore)
         .pipe(ts)
-        .pipe(tslint())
-        .pipe(tslint.report('verbose'))
+            .pipe(tslint())
+            .pipe(tslint.report('verbose'))
         .pipe(ts.restore)
 });
 
@@ -40,40 +42,48 @@ gulp.task('js', function () {
     var ts = config.filter.ts();
 
     return gulp.src(config.source)
-        .pipe(sourcemaps.init())
         .pipe(plumber())
-        .pipe(ts)
-        .pipe(tsc(tsProject))
-        .pipe(ts.restore)
-        .pipe(babel())
-        .pipe(ngAnnotate())
-        .pipe(concat('app.js'))
-        .pipe(uglify())
+        .pipe(sourcemaps.init())
+            .pipe(ts)
+                .pipe(tsc(tsProject))
+            .pipe(ts.restore)
+            .pipe(babel())
+            .pipe(ngAnnotate())
+            .pipe(concat('app.js'))
+            .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + 'js/'))
         .pipe(livereload());
 });
 
-gulp.task('js-dev', function () {
+gulp.task('js:watch', function () {
+    livereload.listen();
+    processJavascriptDev();
+    watch(config.source, function(vinyl) {
+        if (vinyl.event === 'unlink') {                   // if a file is deleted, forget about it
+            delete cached.caches.scripts[vinyl.path];       // gulp-cached remove api
+            remember.forget('scripts', vinyl.path);         // gulp-remember remove api
+        }
+
+        processJavascriptDev();
+    });
+});
+
+function processJavascriptDev() {
     var ts = config.filter.ts();
 
     return gulp.src(config.source)
-        .pipe(sourcemaps.init())
         .pipe(plumber())
-        .pipe(ts)
-        .pipe(tsc(tsProject))
-        .pipe(ts.restore)
-        .pipe(babel())
-        .pipe(ngAnnotate())
-        .pipe(concat('app.js'))
+        .pipe(sourcemaps.init())
+            .pipe(cached('scripts'))
+            .pipe(ts)
+                .pipe(tsc(tsProject))
+            .pipe(ts.restore)
+            .pipe(babel())
+            .pipe(ngAnnotate())
+            .pipe(remember('scripts'))
+            .pipe(concat('app.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + 'js/'))
         .pipe(livereload());
-});
-
-gulp.task('js:watch', ['js-dev'], function () {
-    livereload.listen();
-    watch(config.source, function() {
-        gulp.start('js-dev');
-    });
-});
+};
