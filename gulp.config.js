@@ -24,7 +24,6 @@ module.exports = function() {
       // Client source
       client: client,
       index: index,
-      icon: client + "favicon.ico",
       source: [
             clientApp + '**/*.module.ts',
             clientApp + '**/*.module.js',
@@ -45,7 +44,8 @@ module.exports = function() {
             }
       },
       styles: [client + "/styles/**/*.css", client + "/styles/**/*.less"],
-      assets: client + "/assets/**/*.*",
+      icon: client + "/assets/favicon.ico",
+      assets: [client + "/assets/**/*.*", '!' + client + "/assets/favicon.ico"],
 
       // Filters
       filter: {
