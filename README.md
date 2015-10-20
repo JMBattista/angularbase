@@ -75,5 +75,8 @@ This builds on what is a common theme for gulp, the power of the watch. Using gu
     
 The result of using *autotest* and *serve-dev* together is a fast and fluid workflow process where changes made by the developer are immediately vetted by tests and pushed to their local test instance without any more thought than pressing save. This allows the build tool to get out of the developers way and speed up the process dramatically.
 
+### Speed
 
-Enjoy!
+
+## Enjoy!
+I hope this project can be helpful to you in getting started building real AngularJS applications with a fast and fluid workflow.
