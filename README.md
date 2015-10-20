@@ -76,7 +76,18 @@ This builds on what is a common theme for gulp, the power of the watch. Using gu
 The result of using *autotest* and *serve-dev* together is a fast and fluid workflow process where changes made by the developer are immediately vetted by tests and pushed to their local test instance without any more thought than pressing save. This allows the build tool to get out of the developers way and speed up the process dramatically.
 
 ### Speed
+If you read the **watch** sub section above and got worried about the idea that every time you save a file the build system runs on what is potentially thousands of files and images you're quite right, that would be a performance nightmare. 
 
+Instead we intelligently watch for different kinds of changes and only re-run the necessary parts of the build system. This is similar to incremental compilation, and uses three main techniques described below.
+
+###### Only consider relevant files / types
+Instead of creating a single large watch \*\*/\*.\* and then kicking off build we instead watch more reasonable components. Ie - we don't care about re-building javascript or html when a font changes, or even about our javascript library bundle when changing our own applications javascript code. This helps to quickly limit the scope of a rebuild based on what has changed.
+
+###### Only rebuild the changed files
+While limiting the changes to a 'type' is a powerful concept we still down want to re-drop a hundred images if one changes, so we use this [Recipe](https://github.com/gulpjs/gulp/blob/master/docs/recipes/rebuild-only-files-that-change.md) to ensure that only the modified files are dropped to further streamline the process.
+
+###### Only pass through what is necessary
+While only droping modified files is great for static assets like images and fonts it doesn't work very well for our html or javascript code where we want it to be bundled before it is dropped. Thats where this [Recipe](https://github.com/gulpjs/gulp/blob/master/docs/recipes/only-pass-through-changed-files.md) comes in. Instead of only passing changed files we cache the outputs of time intensive tasks such as the typescript or babel transpilers and only run them for the modified files before passing them, along with the cached values into subsequent steps in the pipeline such as concatenation.
 
 ## Enjoy!
 I hope this project can be helpful to you in getting started building real AngularJS applications with a fast and fluid workflow.
