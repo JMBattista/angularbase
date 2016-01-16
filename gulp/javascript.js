@@ -6,7 +6,6 @@ var ngAnnotate = require('gulp-ng-annotate');
 var plumber    = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify     = require('gulp-uglify');
-var livereload = require('gulp-livereload');
 var jshint     = require('gulp-jshint');
 var jscs       = require('gulp-jscs');
 var tslint     = require('gulp-tslint');
@@ -53,11 +52,10 @@ gulp.task('js', function () {
             .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + 'js/'))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 });
 
 gulp.task('js:watch', function () {
-    livereload.listen();
     processJavascriptDev();
     watch(config.source, function(vinyl) {
         if (vinyl.event === 'unlink') {                   // if a file is deleted, forget about it
@@ -85,5 +83,5 @@ function processJavascriptDev() {
             .pipe(concat('app.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + 'js/'))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 };

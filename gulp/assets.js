@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var config = require('../gulp.config')();
 var changed = require('gulp-changed');
 var watch = require('gulp-watch');
-var livereload = require('gulp-livereload');
 var plumber    = require('gulp-plumber');
 // Define the task for copying html
 
@@ -13,7 +12,6 @@ gulp.task('assets', function () {
 });
 
 gulp.task('assets:watch', ['assets'], function () {
-    livereload.listen();
     watch(config.icon, function() {
         processFavicon();
     });
@@ -30,7 +28,7 @@ function processFavicon() {
         .pipe(plumber())
         .pipe(changed(config.dest))
         .pipe(gulp.dest(config.dest))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 };
 
 function processFonts() {
@@ -38,7 +36,7 @@ function processFonts() {
         .pipe(plumber())
         .pipe(changed(config.dest + "fonts/"))
         .pipe(gulp.dest(config.dest + "fonts/"))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 }
 
 function processAssets() {
@@ -46,5 +44,5 @@ function processAssets() {
         .pipe(plumber())
         .pipe(changed(config.dest + "assets/"))
         .pipe(gulp.dest(config.dest + "assets/"))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 }
