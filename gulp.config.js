@@ -24,7 +24,6 @@ module.exports = function() {
       // Client source
       client: client,
       index: index,
-      icon: client + "favicon.ico",
       source: [
             clientApp + '**/*.module.ts',
             clientApp + '**/*.module.js',
@@ -33,7 +32,7 @@ module.exports = function() {
             '!' + clientApp + '**/*.spec.ts',
             '!' + clientApp + '**/*.spec.js'
         ],
- 
+
       // Html
       html: clientApp + '**/*.html',
       templateCache: {
@@ -44,21 +43,22 @@ module.exports = function() {
                 standAlone: false
             }
       },
-      styles: client + "/styles/**/*.less",
-      assets: client + "/assets/**/*.*",
- 
+      styles: [client + "/styles/**/*.css", client + "/styles/**/*.less"],
+      icon: client + "/assets/favicon.ico",
+      assets: [client + "/assets/**/*.*", '!' + client + "/assets/favicon.ico"],
+
       // Filters
       filter: {
-          ts: filter('**/*.ts', { restore: true }),
-          js: filter('**/*.js', { restore: true }),
-          less: filter('**/*.less', { restore: true}),
-          css: filter('**/*.css', { restore: true})
+          ts: function () { return filter('**/*.ts', { restore: true }) },
+          js: function () { return filter('**/*.js', { restore: true }) },
+          less: function() { return filter('**/*.less', { restore: true}) },
+          css: function() { return filter('**/*.css', { restore: true}) }
       },
-      
+
       // Test
       specHelpers: [client + 'test-helpers/*.js'],
       specs: [clientApp + '**/*.spec.js'],
-  
+
       // Vendor sources
       fonts: bower.directory + 'font-awesome/fonts/**/*.*',
       bower: bower,
@@ -66,20 +66,20 @@ module.exports = function() {
         './package.json',
         './bower.json'
       ],
-      
+
       // Destination
       dest: dest,
-      
+
       // Server
       server: server,
     }
-    
+
     config.wiredep = getWiredepOptions;
-    
+
     config.karma = getKarmaOptions();
-    
+
     return config;
-    
+
     ////////////////
 
     function getWiredepOptions() {
@@ -90,7 +90,7 @@ module.exports = function() {
         };
         return options;
     };
-    
+
      function getKarmaOptions() {
         var options = {
             files: [].concat(
@@ -110,10 +110,12 @@ module.exports = function() {
                     {type: 'text-summary'} //, subdir: '.', file: 'text-summary.txt'}
                 ]
             },
-            preprocessors: {}
+            preprocessors: {
+                'src/**/*.js': ["babel"]
+            }
         };
         options.preprocessors[clientApp + '**/!(*.spec)+(.js)'] = ['coverage'];
-        
+
         return options;
     }
 };

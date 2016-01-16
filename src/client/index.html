@@ -45,16 +45,18 @@
                         </div>
                     </ht-sidebar>
                 </div>
-                    
-        
+
+
                 <div ui-view class="shuffle-animation"></div>
-        
-                <div ngplus-overlay
+
+                <div
+                     class="ng-cloak"
+                     ngplus-overlay
                      ngplus-overlay-delay-in="50"
                      ngplus-overlay-delay-out="700"
                      ngplus-overlay-animation="dissolve-animation">
                     <img src="assets/busy.gif"/>
-        
+
                     <div class="page-spinner-message overlay-message">{{vm.busyMessage}}</div>
                 </div>
             </section>

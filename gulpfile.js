@@ -17,9 +17,9 @@ gulp.task('styles:watch', ['less:watch']);
 
 /** Standard Tasks */
 
-gulp.task('build', ['html', 'js', 'styles', 'assets', 'fonts']);
+gulp.task('build', ['html', 'js', 'styles', 'assets']);
 
-gulp.task('watch', ['html:watch', 'js:watch', 'styles:watch', 'assets:watch', 'fonts:watch']);
+gulp.task('watch', ['html:watch', 'js:watch', 'styles:watch', 'assets:watch']);
 
 // Start the server with full build syntax, does not watch
 gulp.task('serve', ['build', 'server:start']);
