@@ -10,11 +10,11 @@
     "test": "gulp build && gulp test"
   },
   "dependencies": {
-    "koa": "^0.20.0",
+    "koa": "1.1.x",
     "koa-force-ssl": "0.0.5",
     "koa-gzip": "^0.1.0",
-    "koa-router": "^4.3.2",
-    "koa-static": "^1.4.9"
+    "koa-router": "5.3.x",
+    "koa-static": "2.0.x"
   },
   "devDependencies": {
     "browser-sync": "^2.11.0",
