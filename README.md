@@ -68,22 +68,24 @@ To start the autotest process
 This will automatically run the test command described above any time you modify a file in your code base. I like to turn this on and keep it up on a second monitor.
 
 ### Watch
-If testing your code changes automatically was interesting, what about automatically pushing them to the website automatically? That's what the watch command does in conjunction with a chrome extension called [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
+Building directly on the use of watch in the Autotest command we have a watch command that monitors your files to ensure the build in the dist folder is constantly up to date.
 
 To kick this off run
 ```shell
     gulp watch
 ```
 
-Now every time a file is modified the build process will be re-run to update the .dist folder with the new version and LiveReload will automatically push it to your browser. Updates to CSS files are pushed without reloading the page allowing for an amazing development experience as you tweak the settings to get them just right. Javascript and HTML changes force the browser to reload the page, but for any reasonable site this will be a very fast operation.
-
 As you might expect running the *entire* build process for every file edit would be costly, see the **Speed** sub section for more information.
 
 ### Serve Dev
-This builds on what is a common theme for gulp: the power of the watch. Using gulp to start the web server, in this example koa, and then restarting it whenever changes are made to it. 
+ This builds on what is a common theme for gulp: the power of the watch. Using gulp to start the web server, in this example koa, and then restarting it whenever changes are made to it. 
 ```shell
     gulp serve-dev
 ```    
+
+This command also starts the [BrowserSync](https://www.browsersync.io/) plugin, which proxies the website out so that you can connect with an arbitrary number of browsers (within the same WiFi network) and they will be kept in sync with each other and the contents of your dist folder, which are being constantly updated by watch!
+
+Now every time a file is modified and the build process will be re-run to update the .dist folder BrowserSync will automatically push it to all the Browsers you are developing with. Updates to CSS files are pushed without reloading the page allowing for an amazing development experience as you tweak the settings to get them just right. Javascript and HTML changes force the browser to reload the page, but for any reasonable site this will be a very fast operation.
 
 The result of using *autotest* and *serve-dev* together is a fast and fluid workflow process where changes made by the developer are immediately vetted by tests and pushed to their local test instance without any more thought than pressing save. This allows the build tool to get out of the developer's way and speed up the process dramatically.
 
