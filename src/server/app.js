@@ -38,6 +38,8 @@ app.use(function *pageNotFound(next){
 });
 
 app.use(require('koa-static')('.dist', {}));
+
+// Cheat having a server side API by returning static data files under the server folder.
 app.use(require('koa-static')("src/server", {}));
 
 app.use(require('koa-router')(app));
