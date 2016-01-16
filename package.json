@@ -17,6 +17,7 @@
     "koa-static": "^1.4.9"
   },
   "devDependencies": {
+    "browser-sync": "^2.11.0",
     "chai": "^3.0.0",
     "chai-as-promised": "^5.1.0",
     "gulp": "^3.9.0",
