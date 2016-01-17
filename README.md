@@ -120,4 +120,4 @@ npm test
 ## Enjoy!
 I hope this project can be helpful to you in getting started building real AngularJS applications with a fast and fluid workflow.
 
-https://codeship.com/projects/0dbec4d0-9f6d-0133-d435-46b7f2ce8cb8/status?branch=master
+[ ![Codeship Status for JMBattista/angularbase](https://codeship.com/projects/0dbec4d0-9f6d-0133-d435-46b7f2ce8cb8/status?branch=master)](https://codeship.com/projects/127888)
