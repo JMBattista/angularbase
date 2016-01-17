@@ -45,10 +45,28 @@ app.use(function *pageNotFound(next){
 
 app.use(require('koa-static')('.dist', {}));
 
+
+
 // Cheat having a server side API by returning static data files under the server folder.
 app.use(require('koa-static')("src/server", {}));
 
+// Configure Falcor
+app.use(falcorKoa.dataSourceRoute(function (req, res) {
+  // create a Virtual JSON resource with single key ("greeting")
+  return new FalcorRouter([
+    {
+      // match a request for the key "greeting"
+      route: "greeting",
+      // respond with a PathValue with the value of "Hello World."
+      get: function() {
+        return {path:["greeting"], value: "Hello World"};
+      }
+    }
+  ]);
+}));
 
+
+// Configure router
     // Handle references to app (bad template)
     router.all('/app/*', function *() {
         this.status = 404;
@@ -58,7 +76,7 @@ app.use(require('koa-static')("src/server", {}));
     router.all('/api/*', function *() {
         this.status = 404;
     })
-    
+
 // Hook in the router so we can use routes
 app.use(router.routes())
     .use(router.allowedMethods());
