@@ -1,4 +1,5 @@
 var filter = require('gulp-filter')
+var browserSync = require('browser-sync').create();
 
 module.exports = function() {
     var client = './src/client/';
@@ -72,6 +73,9 @@ module.exports = function() {
 
       // Server
       server: server,
+      
+      // Browser Sync
+      browserSync: browserSync
     }
 
     config.wiredep = getWiredepOptions;

@@ -7,7 +7,6 @@ var minifyCss  = require('gulp-minify-css');
 var sourcemaps = require('gulp-sourcemaps');
 var plumber    = require('gulp-plumber');
 var autoprefixer   = require('gulp-autoprefixer');
-var livereload = require('gulp-livereload');
 
 gulp.task('css', function () {
     return gulp.src(config.styles)
@@ -18,11 +17,10 @@ gulp.task('css', function () {
         .pipe(minifyCss())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dest + "styles/"))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 });
 
 gulp.task('css:watch', ['css'], function () {
-    livereload.listen();
     watch(config.styles, function() {
         gulp.start('css');
     });

@@ -7,7 +7,6 @@ var gulp = require('gulp'),
     ngAnnotate = require('gulp-ng-annotate'),
     plumber    = require('gulp-plumber'),
     sourcemaps = require('gulp-sourcemaps'),
-    livereload = require('gulp-livereload'),
     using = require('gulp-using'),
     filter = require('gulp-filter'),
     minifyCss  = require('gulp-minify-css'),
@@ -20,7 +19,6 @@ gulp.task('html', function() {
 });
 
 gulp.task('html:watch', ['html'], function () {
-    livereload.listen();
     watch(config.html, function() {
         processPartials();
     });
@@ -40,7 +38,7 @@ function processIndex() {
         .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest(config.dest))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 }
 
 function processPartials() {
@@ -48,7 +46,7 @@ function processPartials() {
         .pipe(getHtmlMinify())
         .pipe(templateCache(config.templateCache.file, config.templateCache.options))
         .pipe(gulp.dest(config.dest + 'js/'))
-        .pipe(livereload());
+        .pipe(config.browserSync.stream());
 }
 
 function getHtmlMinify() {
