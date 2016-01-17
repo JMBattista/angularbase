@@ -5,7 +5,10 @@ module.exports = function() {
     var client = './src/client/';
     var server = './src/server/';
     var clientApp = client + 'app/';
+    var serverApp = server;
     var report = './report/';
+    var reportClient = report + 'client/';
+    var reportServer = report + 'server/';
     var root = './';
     var index = client + 'index.html'
     var specRunnerFile = 'specs.html';
@@ -25,14 +28,14 @@ module.exports = function() {
       // Client source
       client: client,
       index: index,
-      source: [
+      clientSource: [
             clientApp + '**/*.module.ts',
             clientApp + '**/*.module.js',
             clientApp + '**/*.ts',
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.ts',
             '!' + clientApp + '**/*.spec.js'
-        ],
+      ],
 
       // Html
       html: clientApp + '**/*.html',
@@ -56,7 +59,7 @@ module.exports = function() {
           css: function() { return filter('**/*.css', { restore: true}) }
       },
 
-      // Test
+      // Client Test
       specHelpers: [client + 'test-helpers/*.js'],
       specs: [clientApp + '**/*.spec.js'],
 
@@ -73,7 +76,16 @@ module.exports = function() {
 
       // Server
       server: server,
-      
+      serverSource: [
+            serverApp + '**/*.ts',
+            serverApp + '**/*.js',
+            '!' + serverApp + '**/*.spec.ts',
+            '!' + serverApp + '**/*.spec.js'
+      ],
+       
+      // Server Tests
+      serverSpecs: [serverApp + '**/*.spec.js'],
+
       // Browser Sync
       browserSync: browserSync
     }
@@ -81,6 +93,10 @@ module.exports = function() {
     config.wiredep = getWiredepOptions;
 
     config.karma = getKarmaOptions();
+    
+    config.mocha = getMochaOptions();
+    
+    config.istanbul = getIstanbulOptions();
 
     return config;
 
@@ -106,7 +122,7 @@ module.exports = function() {
             ),
             exclude: [],
             coverage: {
-                dir: report + 'coverage',
+                dir: reportClient + 'coverage',
                 reporters: [
                     // reporters not supporting the `file` property
                     {type: 'html', subdir: 'report-html'},
@@ -120,6 +136,31 @@ module.exports = function() {
         };
         options.preprocessors[clientApp + '**/!(*.spec)+(.js)'] = ['coverage'];
 
+        return options;
+    }
+    
+    function getMochaOptions() {
+        var options = { 
+            reporter: 'progress', 
+            ui: 'bdd', 
+            require: ['chai', 'sinon', 'sinon-chai'] 
+        };
+        
+        return options;
+    }
+    
+    function getIstanbulOptions() {
+        var options = { 
+            start: { includeUntested: true },
+            report: {
+                reporters: ['lcov', 'html', 'text-summary'],
+                reportOpts: {
+                    html: {dir: reportServer + 'coverage/report-html'},
+                    lcov: {dir: reportServer + 'coverage/report-lcov'},
+                }
+            }
+        };
+        
         return options;
     }
 };

@@ -23,7 +23,7 @@ gulp.task('lint', function(){
     var js = config.filter.js();
     var ts = config.filter.ts();
 
-	return gulp.src(config.source)
+	return gulp.src(config.clientSource)
         .pipe(plumber())
         .pipe(js)
             .pipe(jshint())
@@ -40,7 +40,7 @@ gulp.task('lint', function(){
 gulp.task('js', function () {
     var ts = config.filter.ts();
 
-    return gulp.src(config.source)
+    return gulp.src(config.clientSource)
         .pipe(plumber())
         .pipe(sourcemaps.init())
             .pipe(ts)
@@ -57,7 +57,7 @@ gulp.task('js', function () {
 
 gulp.task('js:watch', function () {
     processJavascriptDev();
-    watch(config.source, function(vinyl) {
+    watch(config.clientSource, function(vinyl) {
         if (vinyl.event === 'unlink') {                   // if a file is deleted, forget about it
             delete cached.caches.scripts[vinyl.path];       // gulp-cached remove api
             remember.forget('scripts', vinyl.path);         // gulp-remember remove api
@@ -70,7 +70,7 @@ gulp.task('js:watch', function () {
 function processJavascriptDev() {
     var ts = config.filter.ts();
 
-    return gulp.src(config.source)
+    return gulp.src(config.clientSource)
         .pipe(plumber())
         .pipe(sourcemaps.init())
             .pipe(cached('scripts'))
