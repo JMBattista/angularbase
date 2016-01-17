@@ -21,7 +21,7 @@ gulp.task('wiredep:script', function() {
     var wiredep = require('wiredep').stream;
     var options = config.wiredep();
     
-   var sources = gulp.src(config.source, {read: false});
+   var sources = gulp.src(config.clientSource, {read: false});
 
    return gulp
         .src(config.index)
