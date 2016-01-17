@@ -49,6 +49,6 @@ gulp.task('autotest', ['client-test', 'server-test'], function () {
     });
     
     watch(config.serverSource, function() {
-        gulp.start('server-test')
+        gulp.start('server-test');
     })
 });
