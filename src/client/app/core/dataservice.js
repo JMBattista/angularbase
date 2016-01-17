@@ -10,7 +10,8 @@
     function dataservice($http, $q, logger) {
         var service = {
             getPeople: getPeople,
-            getMessageCount: getMessageCount
+            getMessageCount: getMessageCount,
+            getNews: getNews
         };
 
         return service;
@@ -31,6 +32,13 @@
                 logger.error(msg);
                 return $q.reject(msg);
             }
+        }
+
+        function getNews() {
+            return $q.when({
+                title: 'News',
+                description: 'Hot Towel Angular is a SPA template for Angular developers.'
+            });
         }
     }
 })();
