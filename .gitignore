@@ -3,3 +3,6 @@ bower_components
 .dist
 report
 typings
+
+# Visual Studio Code config
+.vscode
