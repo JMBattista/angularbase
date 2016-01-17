@@ -19,7 +19,7 @@ gulp.task('assets:watch', ['assets'], function () {
         processAssets();
     });
     watch(config.fonts, function() {
-        processFavicon();
+        processFonts();
     });
 });
 
