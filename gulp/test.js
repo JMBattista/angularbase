@@ -7,21 +7,21 @@ var karma      = require('gulp-karma');
 var mocha      = require('gulp-mocha');
 var istanbul   = require('gulp-istanbul');
 
-gulp.task('before-server-test', function () {
+gulp.task('server-test', function () {
+    
     return gulp.src(config.serverSource)
         .pipe(istanbul(config.istanbul.start))
-        .pipe(istanbul.hookRequire());  // Force `require` to return covered files
-});
-
-gulp.task('server-test', ['before-server-test'], function () {
-    gulp.src(config.serverSpecs)
-        .pipe(mocha(config.mocha))
-        .on('error', function (err) {
-            // Make sure failed tests cause gulp to exit non-zero
-            console.log(err);
-            this.emit('end'); //instead of erroring the stream, end it
-        })
-        .pipe(istanbul.writeReports(config.istanbul.report));
+        .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+        .on('finish', function () {
+                gulp.src(config.serverSpecs)
+                    .pipe(mocha(config.mocha))
+                    .on('error', function (err) {
+                        // Make sure failed tests cause gulp to exit non-zero
+                        console.log(err);
+                        this.emit('end'); //instead of erroring the stream, end it
+                    })
+                    .pipe(istanbul.writeReports(config.istanbul.report));
+        }); 
 });
 
 gulp.task('client-test', ['lint'], function () {

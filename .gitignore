@@ -5,7 +5,13 @@ npm-debug.log
 #bower
 bower_components
 
+# Visual Studio Code config
+.vscode
+
 #Other
 .dist
 report
 typings
+
+
+
