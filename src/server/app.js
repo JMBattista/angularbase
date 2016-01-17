@@ -2,6 +2,9 @@
 'use strict';
 
 var koa = require('koa');
+var router = require('koa-router')();
+var FalcorRouter = require('falcor-router');
+var falcorKoa = require('falcor-koa');
 var gzip     = require('koa-gzip');
 var fs = require('fs');
 var path = require('path');
@@ -45,17 +48,20 @@ app.use(require('koa-static')('.dist', {}));
 // Cheat having a server side API by returning static data files under the server folder.
 app.use(require('koa-static')("src/server", {}));
 
-app.use(require('koa-router')(app));
 
-// Handle references to app (bad template)
-app.all('/app/*', function *() {
-     this.status = 404;
-});
+    // Handle references to app (bad template)
+    router.all('/app/*', function *() {
+        this.status = 404;
+    });
 
-// Handle references to missing api functions
-app.all('/api/*', function *() {
-    this.status = 404;
-})
+    // Handle references to missing api functions
+    router.all('/api/*', function *() {
+        this.status = 404;
+    })
+    
+// Hook in the router so we can use routes
+app.use(router.routes())
+    .use(router.allowedMethods());
 
 // For website paths return the index page and let client side router handle it.
 app.use(function *() {
@@ -74,9 +80,8 @@ console.log('NODE_ENV=' + environment);
 
 
 app.listen(port, function() {
-    console.log('Express server listening on port ' + port);
-    console.log('env = ' + app.get('env') +
-        '\n__dirname = ' + __dirname  +
+    console.log('Koa server listening on port ' + port);
+    console.log('\n__dirname = ' + __dirname  +
         '\nprocess.cwd = ' + process.cwd());
 });
 

@@ -103,5 +103,22 @@ While limiting the changes to a 'type' is a powerful concept we still don't want
 ###### Only pass through what is necessary
 While only dropping modified files is great for static assets like images and fonts, it doesn't work very well for our html or javascript code where we want it to be bundled before it is dropped. Thats where this [Recipe](https://github.com/gulpjs/gulp/blob/master/docs/recipes/only-pass-through-changed-files.md) comes in. Instead of only passing changed files we cache the outputs of time intensive tasks such as the typescript or babel transpilers and only run them for the modified files before passing them, along with the cached values, into subsequent steps in the pipeline such as concatenation.
 
+## Continuous Integration
+Easily add Continuous Integration Support with [Codeship](http://codeship.io). 
+
+Once you're created a project configure the setup as
+```shell
+nvm install 4.0
+npm run-script setup
+```
+
+And then configure the test execution ass
+```shell
+npm test
+```
+
 ## Enjoy!
 I hope this project can be helpful to you in getting started building real AngularJS applications with a fast and fluid workflow.
+
+## Status
+[ ![Codeship Status for JMBattista/angularbase](https://codeship.com/projects/0dbec4d0-9f6d-0133-d435-46b7f2ce8cb8/status?branch=master)](https://codeship.com/projects/127888)
