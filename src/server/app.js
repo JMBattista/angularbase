@@ -3,6 +3,8 @@
 
 var koa = require('koa');
 var router = require('koa-router')();
+var FalcorRouter = require('falcor-router');
+var falcorKoa = require('falcor-koa');
 var gzip     = require('koa-gzip');
 var fs = require('fs');
 var path = require('path');
