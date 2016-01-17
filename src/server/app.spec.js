@@ -12,7 +12,7 @@ describe('server app', function () {
             expect(true).to.equal(true);
         });
 
-        // Uncomment this test if you wish to see a test failing       
+        // Uncomment this test if you wish to see a test fail   
         
         /*it('should fail', function () {
             expect(true).to.equal(false);
