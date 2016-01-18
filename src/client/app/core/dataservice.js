@@ -6,7 +6,7 @@
         .factory('dataservice', dataservice);
 
     /* @ngInject */
-    function dataservice($http, $q, logger) {
+    function dataservice($http, $q, falcor, logger) {
         var service = {
             getPeople: getPeople,
             getMessageCount: getMessageCount,
