@@ -2,6 +2,7 @@
 describe('DashboardController', function() {
     var controller;
     var people = mockData.getMockPeople();
+    var news = mockData.getMockNews();
 
     beforeEach(function() {
         bard.appModule('app.dashboard');
@@ -10,6 +11,7 @@ describe('DashboardController', function() {
 
     beforeEach(function () {
         sinon.stub(dataservice, 'getPeople').returns($q.when(people));
+        sinon.stub(dataservice, 'getNews').returns($q.when(news));
         controller = $controller('DashboardController');
         $rootScope.$apply();
     });
