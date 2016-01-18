@@ -9,5 +9,5 @@ gulp.task('server:start', function() {
 
 // restart server if anything changed
 gulp.task( 'server:restart', function() {
-    gulp.watch(['./src/server/**/*.js' ], server.restart );
+    gulp.watch(['./src/server/**/*.js' ], server.restart ).on("change", config.browserSync.reload);
 });
