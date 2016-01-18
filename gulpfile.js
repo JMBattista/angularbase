@@ -25,13 +25,15 @@ gulp.task('watch', ['html:watch', 'js:watch', 'styles:watch', 'assets:watch']);
 // Start the server with full build syntax, does not watch
 gulp.task('serve', ['build', 'server:start'], function() {
     config.browserSync.init({
-        proxy: "localhost:8001"
+        proxy: "localhost:8001",
+        ws: true
     })
 });
 
 // Start the server in dev mode, and keep it up to date with watch
 gulp.task('serve-dev', ['watch', 'server:start', 'server:restart' ], function() {
     config.browserSync.init({
-        proxy:"localhost:8001"
+        proxy:"localhost:8001",
+        ws: true
     })
 });
