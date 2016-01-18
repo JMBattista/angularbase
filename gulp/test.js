@@ -8,7 +8,7 @@ var mocha      = require('gulp-mocha');
 var istanbul   = require('gulp-istanbul');
 
 gulp.task('server-test', function () {
-    
+
     return gulp.src(config.serverSource)
         .pipe(istanbul(config.istanbul.start))
         .pipe(istanbul.hookRequire()) // Force `require` to return covered files
@@ -21,7 +21,7 @@ gulp.task('server-test', function () {
                         this.emit('end'); //instead of erroring the stream, end it
                     })
                     .pipe(istanbul.writeReports(config.istanbul.report));
-        }); 
+        });
 });
 
 gulp.task('client-test', ['lint'], function () {
@@ -47,7 +47,14 @@ gulp.task('autotest', ['client-test', 'server-test'], function () {
     watch(config.clientSource, function () {
         gulp.start('client-test');
     });
-    
+    watch(config.specs, function () {
+        gulp.start('client-test');
+    });
+    watch(config.specHelpers, function () {
+        gulp.start('client-test');
+    });
+
+
     watch(config.serverSource, function() {
         gulp.start('server-test');
     })
