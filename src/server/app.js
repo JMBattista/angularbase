@@ -2,6 +2,7 @@
 'use strict';
 
 var koa = require('koa');
+var bodyParser = require('koa-bodyparser');
 var router = require('koa-router')();
 var FalcorRouter = require('falcor-router');
 var falcorKoa = require('falcor-koa');
@@ -50,20 +51,26 @@ app.use(require('koa-static')('.dist', {}));
 // Cheat having a server side API by returning static data files under the server folder.
 app.use(require('koa-static')("src/server", {}));
 
-// Configure Falcor
-app.use(falcorKoa.dataSourceRoute(function (req, res) {
-  // create a Virtual JSON resource with single key ("greeting")
-  return new FalcorRouter([
-    {
-      // match a request for the key "greeting"
-      route: "greeting",
-      // respond with a PathValue with the value of "Hello World."
-      get: function() {
-        return {path:["greeting"], value: "Hello World"};
-      }
+app.use(bodyParser());
+app.use(falcorKoa.dataSourceRoute(new FalcorRouter([{
+    route: 'greeting',
+    get: function() {
+        return {
+        path: ['greeting'],
+        value: 'Hello World!'
+        }
     }
-  ]);
-}));
+},
+{
+    route: 'news',
+    get: function() {
+        return {
+            path: ['news'],
+            value: 'Hot Towel Angular is a SPA template for Angular developers.'
+        }
+    }
+    
+}])));
 
 
 // Configure router
@@ -75,7 +82,7 @@ app.use(falcorKoa.dataSourceRoute(function (req, res) {
     // Handle references to missing api functions
     router.all('/api/*', function *() {
         this.status = 404;
-    })
+    });
 
 // Hook in the router so we can use routes
 app.use(router.routes())

@@ -40,7 +40,7 @@
             return dataservice.getNews().then(function (data) {
                 vm.news = data;
                 return vm.news;
-            })
+            });
         }
     }
 })();

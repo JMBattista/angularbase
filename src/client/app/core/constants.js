@@ -1,9 +1,10 @@
-/* global toastr:false, moment:false */
+/* global toastr:false, moment:false, falcor:false */
 (function() {
     'use strict';
 
     angular
         .module('app.core')
-        .constant('toastr', toastr)
-        .constant('moment', moment);
+        .constant('falcor', falcor)
+        .constant('moment', moment)
+        .constant('toastr', toastr);
 })();

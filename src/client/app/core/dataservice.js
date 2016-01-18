@@ -5,7 +5,6 @@
         .module('app.core')
         .factory('dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$q', 'logger'];
     /* @ngInject */
     function dataservice($http, $q, logger) {
         var service = {
@@ -35,10 +34,13 @@
         }
 
         function getNews() {
-            return $q.when({
-                title: 'News',
-                description: 'Hot Towel Angular is a SPA template for Angular developers.'
-            });
+            var model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')});
+
+            return model.get('news')
+                .then(response => ({
+                    title: 'News',
+                    description: response.json.news
+                }));
         }
     }
 })();
