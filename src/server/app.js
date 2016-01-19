@@ -2,7 +2,6 @@
 'use strict';
 
 var koa = require('koa');
-var bodyParser = require('koa-bodyparser');
 var gzip     = require('koa-gzip');
 var fs = require('fs');
 var path = require('path');
