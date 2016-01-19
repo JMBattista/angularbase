@@ -27,7 +27,7 @@ describe('dashboard routes', function () {
             $state.go('dashboard');
             $rootScope.$apply();
             expect($state.is('dashboard'));
-            expect(true).to.equal(false);
+            // expect(true).to.equal(false);
         });
     });
 });
