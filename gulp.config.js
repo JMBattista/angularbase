@@ -82,7 +82,7 @@ module.exports = function() {
             '!' + serverApp + '**/*.spec.ts',
             '!' + serverApp + '**/*.spec.js'
       ],
-       
+
       // Server Tests
       serverSpecs: [serverApp + '**/*.spec.js'],
 
@@ -93,9 +93,9 @@ module.exports = function() {
     config.wiredep = getWiredepOptions;
 
     config.karma = getKarmaOptions();
-    
+
     config.mocha = getMochaOptions();
-    
+
     config.istanbul = getIstanbulOptions();
 
     return config;
@@ -115,6 +115,7 @@ module.exports = function() {
         var options = {
             files: [].concat(
                 bowerFiles,
+                './bower_components/falcor/dist/falcor.browser.js',
                 config.specHelpers,
                 clientApp + '**/*.module.js',
                 clientApp + '**/*.js',
@@ -138,19 +139,19 @@ module.exports = function() {
 
         return options;
     }
-    
+
     function getMochaOptions() {
-        var options = { 
-            reporter: 'progress', 
-            ui: 'bdd', 
-            require: ['chai', 'sinon', 'sinon-chai'] 
+        var options = {
+            reporter: 'progress',
+            ui: 'bdd',
+            require: ['chai', 'sinon', 'sinon-chai']
         };
-        
+
         return options;
     }
-    
+
     function getIstanbulOptions() {
-        var options = { 
+        var options = {
             start: { includeUntested: true },
             report: {
                 reporters: ['lcov', 'html', 'text-summary'],
@@ -160,7 +161,7 @@ module.exports = function() {
                 }
             }
         };
-        
+
         return options;
     }
 };

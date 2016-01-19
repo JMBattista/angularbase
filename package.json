@@ -10,6 +10,8 @@
     "test": "gulp build && gulp test"
   },
   "dependencies": {
+    "falcor-koa": "0.1.0-alpha.2",
+    "falcor-router": "0.2.x",
     "koa": "1.1.x",
     "koa-force-ssl": "0.0.5",
     "koa-gzip": "^0.1.0",

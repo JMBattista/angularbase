@@ -5,12 +5,12 @@
         .module('app.core')
         .factory('dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$q', 'logger'];
     /* @ngInject */
-    function dataservice($http, $q, logger) {
+    function dataservice($http, $q, falcor, logger) {
         var service = {
             getPeople: getPeople,
-            getMessageCount: getMessageCount
+            getMessageCount: getMessageCount,
+            getNews: getNews
         };
 
         return service;
@@ -31,6 +31,16 @@
                 logger.error(msg);
                 return $q.reject(msg);
             }
+        }
+
+        function getNews() {
+            var model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')});
+
+            return model.get('news')
+                .then(response => ({
+                    title: 'News',
+                    description: response.json.news
+                }));
         }
     }
 })();
