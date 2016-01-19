@@ -18,7 +18,6 @@ gulp.task('server-test', function () {
                     .on('error', function (err) {
                         // Make sure failed tests cause gulp to exit non-zero
                         console.log(err);
-                        this.emit('end'); //instead of erroring the stream, end it
                     })
                     .pipe(istanbul.writeReports(config.istanbul.report));
         });
@@ -37,7 +36,6 @@ gulp.task('client-test', ['lint'], function () {
         .on('error', function (err) {
             // Make sure failed tests cause gulp to exit non-zero
             console.log(err);
-            this.emit('end'); //instead of erroring the stream, end it
         });
 });
 
@@ -47,7 +45,7 @@ gulp.task('autotest', ['client-test', 'server-test'], function () {
     watch(config.clientSource, function () {
         gulp.start('client-test');
     });
-    watch(config.specs, function () {
+    watch(config.clientSpecs, function () {
         gulp.start('client-test');
     });
     watch(config.specHelpers, function () {
@@ -56,6 +54,10 @@ gulp.task('autotest', ['client-test', 'server-test'], function () {
 
 
     watch(config.serverSource, function() {
+        gulp.start('server-test');
+    })
+
+    watch(config.serverSpecs, function() {
         gulp.start('server-test');
     })
 });

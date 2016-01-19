@@ -61,7 +61,7 @@ module.exports = function() {
 
       // Client Test
       specHelpers: [client + 'test-helpers/*.js'],
-      specs: [clientApp + '**/*.spec.js'],
+      clientSpecs: [clientApp + '**/*.spec.js'],
 
       // Vendor sources
       fonts: bower.directory + 'font-awesome/fonts/**/*.*',
