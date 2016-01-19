@@ -3,7 +3,7 @@ var gulp       = require('gulp');
 var watch      = require('gulp-watch');
 var config     = require('../gulp.config')();
 var jshint     = require('gulp-jshint');
-var karma      = require('gulp-karma');
+var Server     = require('karma').Server;
 var mocha      = require('gulp-mocha');
 var istanbul   = require('gulp-istanbul');
 
@@ -23,20 +23,11 @@ gulp.task('server-test', function () {
         });
 });
 
-gulp.task('client-test', ['lint'], function () {
-    // Be sure to return the stream
-    // NOTE: Using the fake './foobar' so as to run the files
-    // listed in karma.conf.js INSTEAD of what was passed to
-    // gulp.src !
-    return gulp.src('./foobar')
-        .pipe(karma({
-            configFile: 'karma.conf.js',
-            action: 'run'
-        }))
-        .on('error', function (err) {
-            // Make sure failed tests cause gulp to exit non-zero
-            console.log(err);
-        });
+gulp.task('client-test', ['lint'], function (done) {
+    new Server({
+        configFile: __dirname + '/../karma.conf.js',
+        singleRun: true
+    }, done).start();
 });
 
 gulp.task('test', ['client-test', 'server-test']);
