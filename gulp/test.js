@@ -8,19 +8,7 @@ var mocha      = require('gulp-mocha');
 var istanbul   = require('gulp-istanbul');
 
 gulp.task('server-test', function () {
-
-    return gulp.src(config.serverSource)
-        .pipe(istanbul(config.istanbul.start))
-        .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-        .on('finish', function () {
-                gulp.src(config.serverSpecs)
-                    .pipe(mocha(config.mocha))
-                    .on('error', function (err) {
-                        // Make sure failed tests cause gulp to exit non-zero
-                        console.log(err);
-                    })
-                    .pipe(istanbul.writeReports(config.istanbul.report));
-        });
+    return buildServerTests(context => process.exit(1))();
 });
 
 gulp.task('client-test', ['lint'], function (done) {
@@ -44,11 +32,25 @@ gulp.task('autotest', ['client-test', 'server-test'], function () {
     });
 
 
-    watch(config.serverSource, function() {
-        gulp.start('server-test');
-    })
+    watch(config.serverSource, buildServerTests(context => context.emit('end')));
 
-    watch(config.serverSpecs, function() {
-        gulp.start('server-test');
-    })
+    watch(config.serverSpecs, buildServerTests(context => context.emit('end')));
 });
+
+function buildServerTests(onfail) {
+    return function() {
+        return gulp.src(config.serverSource)
+            .pipe(istanbul(config.istanbul.start))
+            .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+            .on('finish', function () {
+                    gulp.src(config.serverSpecs)
+                        .pipe(mocha(config.mocha))
+                        .on('error', function (err) {
+                            // Make sure failed tests cause gulp to exit non-zero
+                            console.log(err);
+                            onfail(this);
+                        })
+                        .pipe(istanbul.writeReports(config.istanbul.report));
+            });
+    };
+}
