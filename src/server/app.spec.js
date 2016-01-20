@@ -14,8 +14,8 @@ describe('server app', function () {
 
         // Uncomment this test if you wish to see a test fail
 
-        it('should fail', function () {
-            expect(true).to.equal(false);
-        });
+        // it('should fail', function () {
+        //     expect(true).to.equal(false);
+        // });
     });
 });
