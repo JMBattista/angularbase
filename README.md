@@ -52,10 +52,15 @@ To run the build process
     gulp build
 ```
 
-To run Tests and Style validation
+To run Tests and Style validation*
 ```shell
     gulp test
 ```
+*You need to have build the system before you can run tests on it. You can get around this by running build && test via
+```
+    npm test
+```
+
 
 ### Autotest
 Now we're getting into more exciting territory courtesy of the *watch* concept. Watches monitor a set of files and can be used to trigger a command when the files are changed.
