@@ -2,10 +2,9 @@
     'use strict';
 
     angular
-        .module('app.dashboard')
+        .module('app.hotel')
         .run(appRun);
 
-    appRun.$inject = ['routerHelper'];
     /* @ngInject */
     function appRun(routerHelper) {
         routerHelper.configureStates(getStates());
@@ -14,16 +13,16 @@
     function getStates() {
         return [
             {
-                state: 'dashboard',
+                state: 'hotel',
                 config: {
                     url: '/',
-                    templateUrl: '/app/dashboard/dashboard.html',
-                    controller: 'DashboardController',
+                    templateUrl: '/app/hotel/hotel.html',
+                    controller: 'HotelController',
                     controllerAs: 'vm',
-                    title: 'dashboard',
+                    title: 'Hotel',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Dashboard'
+                        content: '<i class="fa fa-bed"></i> Hotel'
                     }
                 }
             }

@@ -2,22 +2,22 @@
     'use strict';
 
     angular
-        .module('app.dashboard')
-        .controller('DashboardController', DashboardController);
+        .module('app.hotel')
+        .controller('HotelController', HotelController);
 
     /* @ngInject */
-    function DashboardController($q, dataservice, logger) {
+    function HotelController($q, dataservice, logger) {
         var vm = this;
         vm.messageCount = 0;
         vm.people = [];
-        vm.title = 'Dashboard';
+        vm.title = 'Hotel';
 
         activate();
 
         function activate() {
             var promises = [getMessageCount(), getPeople(), getNews()];
             return $q.all(promises).then(function() {
-                logger.info('Activated Dashboard View');
+                logger.info('Activated Hotel View');
             });
         }
 

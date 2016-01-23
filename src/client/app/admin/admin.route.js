@@ -5,7 +5,6 @@
         .module('app.admin')
         .run(appRun);
 
-    appRun.$inject = ['routerHelper'];
     /* @ngInject */
     function appRun(routerHelper) {
         routerHelper.configureStates(getStates());
@@ -22,7 +21,7 @@
                     controllerAs: 'vm',
                     title: 'Admin',
                     settings: {
-                        nav: 2,
+                        nav: 100,
                         content: '<i class="fa fa-lock"></i> Admin'
                     }
                 }
