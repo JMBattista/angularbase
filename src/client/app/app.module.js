@@ -5,7 +5,7 @@
         'app.widgets',
         'app.admin',
         'app.dashboard',
-        'app.hotel',
+        'app.hotels',
         'app.layout'
     ]);
 })();

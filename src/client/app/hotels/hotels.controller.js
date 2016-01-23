@@ -2,22 +2,22 @@
     'use strict';
 
     angular
-        .module('app.hotel')
-        .controller('HotelController', HotelController);
+        .module('app.hotels')
+        .controller('HotelsController', HotelsController);
 
     /* @ngInject */
-    function HotelController($q, dataservice, logger) {
+    function HotelsController($q, dataservice, logger) {
         var vm = this;
         vm.messageCount = 0;
         vm.people = [];
-        vm.title = 'Hotel';
+        vm.title = 'Hotels';
 
         activate();
 
         function activate() {
             var promises = [getMessageCount(), getPeople(), getNews()];
             return $q.all(promises).then(function() {
-                logger.info('Activated Hotel View');
+                logger.info('Activated Hotels View');
             });
         }
 

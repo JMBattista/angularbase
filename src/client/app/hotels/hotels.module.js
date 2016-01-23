@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('app.hotel', [
+    angular.module('app.hotels', [
         'app.core',
         'app.widgets'
       ]);

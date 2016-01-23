@@ -1,11 +1,11 @@
 /* jshint -W117, -W030 */
-describe('hotel routes', function () {
+describe('hotels routes', function () {
     describe('state', function () {
         var controller;
-        var view = '/app/hotel/hotel.html';
+        var view = '/app/hotels/hotels.html';
 
         beforeEach(function() {
-            module('app.hotel', bard.fakeToastr);
+            module('app.hotels', bard.fakeToastr);
             bard.inject('$httpBackend', '$location', '$rootScope', '$state', '$templateCache');
         });
 
@@ -15,18 +15,18 @@ describe('hotel routes', function () {
 
         bard.verifyNoOutstandingHttpRequests();
 
-        it('should map state hotel to url / ', function() {
-            expect($state.href('hotel', {})).to.equal('/');
+        it('should map state hotels to url / ', function() {
+            expect($state.href('hotels', {})).to.equal('/');
         });
 
-        it('should map /hotel route to hotel View template', function () {
-            expect($state.get('hotel').templateUrl).to.equal(view);
+        it('should map /hotels route to hotels View template', function () {
+            expect($state.get('hotels').templateUrl).to.equal(view);
         });
 
-        it('of hotel should work with $state.go', function () {
-            $state.go('hotel');
+        it('of hotels should work with $state.go', function () {
+            $state.go('hotels');
             $rootScope.$apply();
-            expect($state.is('hotel'));
+            expect($state.is('hotels'));
         });
     });
 });
