@@ -1,8 +1,15 @@
-<li class="blightblue">
-    <div class="pull-left"><i class="fa fa-plane"></i></div>
-    <div class="datas-text pull-right">
-        <span class="bold">{{hotel.info.name}}</span> {{hotel.info.cost}}
-        {{hotel.info.rating}}
+<li class="blightblue tile">
+    <div class="row">
+        <div class="col-md-3"><i class="fa fa-building fa-5x"></i></div>
+        <div class="rating-text col-md-9">
+            <span class="bold">{{hotel.info.name}}</span>
+            {{hotel.info.rating}} star {{hotel.info.cost}}
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <uib-rating class="user-rating" ng-model="hotel.info.userRating" max="5" aria-labelledby="user-rating"></uib-rating>
+        </div>
+    </div>
     </div>
     <div class="clearfix"></div>
 </li>
