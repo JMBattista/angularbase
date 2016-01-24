@@ -10,12 +10,13 @@
         var vm = this;
         vm.messageCount = 0;
         vm.people = [];
+        vm.list = [];
         vm.title = 'Hotels';
 
         activate();
 
         function activate() {
-            var promises = [getMessageCount(), getPeople(), getNews()];
+            var promises = [getMessageCount(), getPeople(), getNews(), getHotels()];
             return $q.all(promises).then(function() {
                 logger.info('Activated Hotels View');
             });
@@ -33,6 +34,49 @@
                 vm.people = data;
                 return vm.people;
             });
+        }
+
+        function getHotels() {
+            vm.list = [
+                {
+                    name: 'Hotel A',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel A',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel A',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel A',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel A',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel A',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+            ];
+
+            return $q.resolve();
         }
 
         function getNews() {

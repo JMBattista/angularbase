@@ -13,12 +13,11 @@
         // A hotel box
         var directive = {
             scope: {
-                'title': '@',
-                'hotels': '='
+                'info': '='
             },
             templateUrl: '/app/widgets/ht-hotel.html',
             restrict: 'E',
-            controllerAs: 'hotels',
+            controllerAs: 'hotel',
             bindToController: true,
             controller: function() {
             }

@@ -14,7 +14,7 @@
         var directive = {
             scope: {
                 'title': '@',
-                'hotels': '='
+                'list': '=hotels'
             },
             templateUrl: '/app/widgets/ht-hotels-list.html',
             restrict: 'E',
