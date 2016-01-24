@@ -3,12 +3,12 @@
 
     angular
         .module('app.widgets')
-        .directive('htHotelList', htHotelList);
+        .directive('htHotelsList', htHotelsList);
 
     /* @ngInject */
-    function htHotelList() {
+    function htHotelsList() {
         //Usage:
-        //<div ht-hotel-list title="Popular" hotels="vm.hotels"></div>
+        //<ht-hotels-list title="Popular" hotels="vm.hotels"></ht-hotels-list>
         // Creates:
         // A list of hotels w/ the given titel
         var directive = {
@@ -16,12 +16,11 @@
                 'title': '@',
                 'hotels': '='
             },
-            templateUrl: '/app/widgets/ht-hotel-list.html',
+            templateUrl: '/app/widgets/ht-hotels-list.html',
             restrict: 'E',
             controllerAs: 'hotels',
             bindToController: true,
             controller: function() {
-                this.foo = 'bar';
             }
         };
         return directive;
