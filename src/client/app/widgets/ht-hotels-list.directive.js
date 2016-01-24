@@ -20,9 +20,14 @@
             restrict: 'E',
             controllerAs: 'hotels',
             bindToController: true,
-            controller: function() {
-            }
+            controller: controller
         };
         return directive;
+    }
+
+    /* @ngIngject */
+    function controller($element) {
+        var vm = this;
+        $($element).find('.owl-carousel').owlCarousel();
     }
 })();
