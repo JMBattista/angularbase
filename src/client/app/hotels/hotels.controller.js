@@ -45,31 +45,79 @@
                     userRating: null
                 },
                 {
-                    name: 'Hotel A',
+                    name: 'Hotel B',
                     cost: '$$',
                     rating: 4,
                     userRating: null
                 },
                 {
-                    name: 'Hotel A',
+                    name: 'Hotel C',
                     cost: '$$',
                     rating: 4,
                     userRating: null
                 },
                 {
-                    name: 'Hotel A',
+                    name: 'Hotel D',
                     cost: '$$',
                     rating: 4,
                     userRating: null
                 },
                 {
-                    name: 'Hotel A',
+                    name: 'Hotel E',
                     cost: '$$',
                     rating: 4,
                     userRating: null
                 },
                 {
-                    name: 'Hotel A',
+                    name: 'Hotel F',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel G',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel H',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel I',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel J',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel K',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel L',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel M',
+                    cost: '$$',
+                    rating: 4,
+                    userRating: null
+                },
+                {
+                    name: 'Hotel N',
                     cost: '$$',
                     rating: 4,
                     userRating: null
