@@ -5,7 +5,7 @@ describe('socketservice', function () {
 
     beforeEach(function () {
         bard.appModule('app.core');
-        bard.inject('$log', '$q', 'io');
+        bard.inject('$log', '$q', '$rootScope', 'io');
     });
 
     bard.verifyNoOutstandingHttpRequests();
@@ -56,37 +56,14 @@ describe('socketservice', function () {
                 beforeEach(function () {
                     socketId = service.getChatSocketId();
                 });
-
-                it('should fail', function () {
-                    return $q.reject("error msg");
-                });
-
-                it('should pass', function () { return $q.resolve("pass"); })
-
-                it('should pass with done', function (done) {
-                    return $q.resolve("pass")
-                        .then(function () { done(); });
-                });            
-                
-                it ('should pass with chai with promises', function() {
-                   return $q.resolve('pass').should.eventually.equal('pass'); 
-                });
-
-                    /* it('should send successfully with chai as promised', function () {
-                         return service.send(socketId, 'message', 'test message').should.eventually.equal('ack');
+    
+                     it('should send successfully', function (done) {
+                         service.send(socketId, 'message', 'test message')
+                             .then(function (data) { expect(data).to.equal('ack'); done(); })
+                             .catch(function (err) { done(err); });
+                         $rootScope.$apply();
                      });
      
-                     it('should send successfully with done', function (done) {
-                         return service.send(socketId, 'message', 'test message')
-                             .then(function (x) { expect(x).to.equal('ack'); done(); })
-                             .catch(function (x) { assert(false, 'error'); done(); });
-                     });
-     
-                     it('should send successfully with no done', function () {
-                            return service.send(socketId, 'message', 'test message')
-                                .then(function (x) { expect(x).to.equal('ack'); })
-                                .catch(function (x) { assert(false, 'error'); });
-                     });*/
                 });
 
             });
