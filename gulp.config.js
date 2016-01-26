@@ -116,6 +116,7 @@ module.exports = function() {
             files: [].concat(
                 bowerFiles,
                 './bower_components/falcor/dist/falcor.browser.js',
+                './bower_components/socket.io-client/socket.io.js',
                 config.specHelpers,
                 clientApp + '**/*.module.js',
                 clientApp + '**/*.js',

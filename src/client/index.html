@@ -46,6 +46,21 @@
                     </ht-sidebar>
                 </div>
 
+                <div ng-controller="ChatController as vm" >
+                    <div class="chatbar">
+                        <div class="chatbar-filler"></div>
+                        <div class="chatbar-inner">
+                            <div>Chat</div>
+                            <div>
+                                <label ng-bind="vm.output"/>
+                            </div>
+                            <div>
+                                <input ng-model="vm.message"/>
+                                <button ng-click="vm.sendMessage()">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div ui-view class="shuffle-animation"></div>
 
@@ -75,6 +90,7 @@
 
     <!-- build:js js/lib.js -->
     <script src="/bower_components/falcor/dist/falcor.browser.js"></script>
+    <script src="/bower_components/socket.io-client/socket.io.js"></script>
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>

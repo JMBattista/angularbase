@@ -15,7 +15,7 @@ var environment = process.env.NODE_ENV;
 
 app.use(gzip());
 
-// Set the
+// Set the 
 app.use(function *pageNotFound(next){
   yield next;
 
@@ -60,12 +60,19 @@ app.use(function *() {
     }
 });
 
+/* Setting up the websocket connection
+   No app.use statements can appear after this.*/
+var server = require('http').Server(app.callback()),
+    socketServer = require('./socket/socket-server.js')(server);
+
+socketServer.addNamespace('chat', [__dirname + '/socket/chat/']);
+
 console.log('About to crank up node');
 console.log('PORT=' + port);
 console.log('NODE_ENV=' + environment);
 
-
-app.listen(port, function() {
+/* Note: this must be server not app for the websocket behaviour to function */
+server.listen(port, function () {
     console.log('Koa server listening on port ' + port);
     console.log('\n__dirname = ' + __dirname  +
         '\nprocess.cwd = ' + process.cwd());
