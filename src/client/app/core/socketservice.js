@@ -42,30 +42,49 @@
          * @param {string} type the message type
          * @param {string} data the data to send
          * @param {boolean} reqAck whether to wait for acknowledgment from the server
+         * @param {number} timeout how long to wait (in ms) before rejecting  (0 means never)
          * @return If acknowledgment required, resolves with any acknowledge data.  Rejected on error.
          *         If acknowledgment not required, resolves with ''. Rejected on error.
          */
-        function send(socketId, type, data, reqAck = true) {
+        function send(socketId, type, data, reqAck = true, timeout = 0) {
             var deferred = $q.defer();
+            var resolved = false;
 
             try {
                 var socket = getSocketById(socketId);
 
-                if (reqAck)
-                {
+                if (reqAck) {
                     sendInternal(socket, type, data, function (ackData) {
-                        console.log('resolving');
-                        deferred.resolve(ackData);
+                        if (!resolved) {
+                            resolved = true;
+                            deferred.resolve(ackData);
+                        }
                     });
+
+                    if (typeof (timeout) === 'number' && !isNaN(timeout)) {
+                        setTimeout(function () {
+                            if (!resolved) {
+                                resolved = true;
+                                deferred.reject('timeout');
+                            }
+                        }, timeout);
+                    }
                 }
                 else {
                     sendInternal(socket, type, data);
-                    deferred.resolve('');
+
+                    if (!resolved) {
+                        resolved = true;
+                        deferred.resolve('');
+                    }
                 }
             }
             catch (error) {
                 logger.error('Socket send error: ' + error);
-                deferred.reject(error);
+                if (!resolved) {
+                    resolved = true;
+                    deferred.reject(error);
+                }
             }
 
             return deferred.promise;
