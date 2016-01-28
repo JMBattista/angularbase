@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    var model = null;
+
     angular
         .module('app.core')
         .factory('dataservice', dataservice);
@@ -10,7 +12,9 @@
         var service = {
             getPeople: getPeople,
             getMessageCount: getMessageCount,
-            getNews: getNews
+            getNews: getNews,
+            getHotelCategories: getHotelCategories,
+            getHotels: getHotels
         };
 
         return service;
@@ -34,7 +38,7 @@
         }
 
         function getNews() {
-            var model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')});
+            let model = getModel();
 
             return model.get('news')
                 .then(response => ({
@@ -42,5 +46,31 @@
                     description: response.json.news
                 }));
         }
+
+        function getHotelCategories(indexes) {
+            let model = getModel();
+
+            return model.get(['hotelCategories', indexes, 'name'])
+                .then(response => return toArray(response.json.hotelCategories));
+        }
+
+        function getHotels(indexes) {
+            let model = getModel();
+
+            return model.get(['hotelsById', indexes, ['name', 'cost', 'userRating', 'rating']])
+                .then(response => toArray(response.json.hotelsById));
+        }
+    }
+
+    function toArray(obj) {
+        Object.keys(obj)
+            .map(key => obj[key]);
+    }
+
+    function getModel() {
+        if (model == null)
+            model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')});
+
+        return model;
     }
 })();

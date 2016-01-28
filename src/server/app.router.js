@@ -11,7 +11,7 @@ router.all('/model.json', falcorKoa.dataSourceRoute(require('./app.falcor.js')))
 
 
 router.get('/api/people', function*() {
-    this.body = db['people'];
+    this.body = db.people.findAll();
 })
 
 // Handle references to app (bad template)

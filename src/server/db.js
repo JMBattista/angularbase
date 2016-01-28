@@ -16,7 +16,7 @@ fs.readdirSync(`${__dirname}/data`).forEach(function (flatFile) {
     fs.readFile(`${__dirname}/data/${flatFile}`, 'utf8', (err, data) => {
         if (err) return console.log(err);
         let key = path.basename(flatFile, extname(flatFile));
-        db[key] = JSON.parse(data);
+        db[key] = wrap(JSON.parse(data));
     });
 });
 
@@ -24,6 +24,16 @@ function stat(file) {
   return function (done) {
     fs.stat(file, done);
   };
+}
+
+function wrap(list) {
+	return {
+		findAll: () => list,
+		findById: (id) => {
+			let results = list.filter(i => i.id === id);
+			return results.length == 1 ? results[0] : null;
+			}
+	}
 }
 
 

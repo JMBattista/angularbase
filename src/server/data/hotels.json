@@ -1,0 +1,100 @@
+[
+    {
+        "id": "A",
+        "name": "Hotel A",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "B",
+        "name": "Hotel B",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "C",
+        "name": "Hotel C",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "D",
+        "name": "Hotel D",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "E",
+        "name": "Hotel E",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "F",
+        "name": "Hotel F",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "G",
+        "name": "Hotel G",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "H",
+        "name": "Hotel H",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "I",
+        "name": "Hotel I",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "J",
+        "name": "Hotel J",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "K",
+        "name": "Hotel K",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "L",
+        "name": "Hotel L",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "M",
+        "name": "Hotel M",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    },
+    {
+        "id": "N",
+        "name": "Hotel N",
+        "cost": "$$",
+        "rating": 4,
+        "userRating": null
+    }
+]

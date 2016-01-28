@@ -10,13 +10,15 @@
     "test": "gulp build && gulp test"
   },
   "dependencies": {
+    "falcor-json-graph": "^1.1.7",
     "falcor-koa": "0.1.0-alpha.2",
     "falcor-router": "0.2.x",
     "koa": "1.1.x",
     "koa-force-ssl": "0.0.5",
     "koa-gzip": "^0.1.0",
     "koa-router": "5.3.x",
-    "koa-static": "2.0.x"
+    "koa-static": "2.0.x",
+    "promise": "^7.1.1"
   },
   "devDependencies": {
     "browser-sync": "^2.11.0",
