@@ -4,97 +4,111 @@
         "name": "Hotel A",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Popular", "Beach Front", "On Sale", "All Inclusive"]
     },
     {
         "id": "B",
         "name": "Hotel B",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Popular", "All Inclusive"]
     },
     {
         "id": "C",
         "name": "Hotel C",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Popular", "On Sale"]
     },
     {
         "id": "D",
         "name": "Hotel D",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["On Sale", "Beach Front"]
     },
     {
         "id": "E",
         "name": "Hotel E",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["On Sale", "Beach Front"]
     },
     {
         "id": "F",
         "name": "Hotel F",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["On Sale", "All Inclusive"]
     },
     {
         "id": "G",
         "name": "Hotel G",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "All Inclusive"]
     },
     {
         "id": "H",
         "name": "Hotel H",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "All Inclusive"]
     },
     {
         "id": "I",
         "name": "Hotel I",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "All Inclusive", "Popular"]
     },
     {
         "id": "J",
         "name": "Hotel J",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "All Inclusive"]
     },
     {
         "id": "K",
         "name": "Hotel K",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "All Inclusive", "Popular"]
     },
     {
         "id": "L",
         "name": "Hotel L",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "All Inclusive", "Popular"]
     },
     {
         "id": "M",
         "name": "Hotel M",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "On Sale", "Popular"]
     },
     {
         "id": "N",
         "name": "Hotel N",
         "cost": "$$",
         "rating": 4,
-        "userRating": null
+        "userRating": null,
+        "categories": ["Beach Front", "Popular"]
     }
 ]
