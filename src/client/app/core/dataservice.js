@@ -51,7 +51,7 @@
             let model = getModel();
 
             return model.get(['hotelCategories', indexes, 'name'])
-                .then(response => return toArray(response.json.hotelCategories));
+                .then(response => toArray(response.json.hotelCategories));
         }
 
         function getHotels(indexes) {
@@ -59,11 +59,12 @@
 
             return model.get(['hotelsById', indexes, ['name', 'cost', 'userRating', 'rating']])
                 .then(response => toArray(response.json.hotelsById));
+
         }
     }
 
     function toArray(obj) {
-        Object.keys(obj)
+        return Object.keys(obj)
             .map(key => obj[key]);
     }
 

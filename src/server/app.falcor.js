@@ -41,28 +41,28 @@ module.exports = new FalcorRouter([
             return result; 
         }
     },
-    {
-        route:'hotelCategories[{integers:categories}].hotels[{integers:hotels}]',
-        get: function(pathSet) {
-            let hotelCategories = db.categories.findAll();
+    // {
+    //     route:'hotelCategories[{integers:categories}].hotels[{integers:hotels}]',
+    //     get: function(pathSet) {
+    //         let hotelCategories = db.categories.findAll();
 
-            console.log('------------');
-            console.log('categories', pathSet.categories);
-            console.log('hotelIndex', pathSet.hotels);
+    //         console.log('------------');
+    //         console.log('categories', pathSet.categories);
+    //         console.log('hotelIndex', pathSet.hotels);
 
-            let result = pathSet.categories.map(key => {
-                console.log('...', key);
-                console.log('....', hotelCategories[key].name);
-                return {
-                    path: ['hotelCategories', key, 'name'],
-                    value: hotelCategories[key].name
-                }
-            });
+    //         let result = pathSet.categories.map(key => {
+    //             console.log('...', key);
+    //             console.log('....', hotelCategories[key].name);
+    //             return {
+    //                 path: ['hotelCategories', key, 'name'],
+    //                 value: hotelCategories[key].name
+    //             }
+    //         });
 
-            console.log('result', result);
-            return result; 
-        }
-    },
+    //         console.log('result', result);
+    //         return result; 
+    //     }
+    // },
     {
         route: 'hotelsById[{keys:ids}].[{keys:props}]',
         get: function(pathSet) {
