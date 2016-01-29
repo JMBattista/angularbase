@@ -14,7 +14,7 @@
             getMessageCount: getMessageCount,
             getNews: getNews,
             getHotelCategories: getHotelCategories,
-            getHotels: getHotels
+            getHotelsFromCategory: getHotelsFromCategory,
         };
 
         return service;
@@ -47,19 +47,21 @@
                 }));
         }
 
-        function getHotelCategories(indexes) {
+        function getHotelsFromCategory(categoryIndex, hotelIndexes) {
             let model = getModel();
 
-            return model.get(['hotelCategories', indexes, 'name'])
+            console.log('trying to get category list');
+
+            return model.get(['hotelCategories', categoryIndex, 'hotels', hotelIndexes])
                 .then(response => toArray(response.json.hotelCategories));
         }
 
-        function getHotels(indexes) {
+        function getHotelCategories(indexes) {
             let model = getModel();
 
-            return model.get(['hotelsById', indexes, ['name', 'cost', 'userRating', 'rating']])
-                .then(response => toArray(response.json.hotelsById));
-
+            // return model.get(['hotelCategories', indexes, 'name')
+            return model.get(['hotelCategories', indexes, ['name','hotels'], indexes])
+                .then(response => toArray(response.json.hotelCategories));
         }
     }
 

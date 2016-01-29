@@ -1,6 +1,9 @@
 /*jshint node:true*/
 'use strict';
 
+var domain = require('domain');
+var d = domain.create();
+
 var jsong = require('falcor-json-graph');
 var FalcorRouter = require('falcor-router');
 var db = require('./db.js');
@@ -30,39 +33,43 @@ module.exports = new FalcorRouter([
         get: function(pathSet) {
             let hotelCategories = db.categories.findAll();
 
-            let result = pathSet.categories.map(category => {
+            return pathSet.categories.map(category => {
                 return {
                     path: ['hotelCategories', category, 'name'],
                     value: hotelCategories[category].name
                 }
             });
 
-            console.log('result', result);
+        }
+    },
+    {
+        route:'hotelCategories[{integers:categories}].hotels[{integers:hotels}]',
+        get: function(pathSet) {
+            let hotelCategories = db.categories.findAll();
+
+            let result = pathSet.categories.map(index => hotelCategories[index].name)
+                .map(category => 
+                    db.hotels
+                        .findAll()
+                        .filter(hotel => hotel.categories.indexOf(category) != -1)
+                )
+                .map((hotels, categoryIndex) => {
+                    let reducedArray = pathSet.hotels
+                            .map(index => hotels.splice(index, 1))
+                            .reduce((acc, value) => acc.concat(value), []);
+                    let results = pathSet.hotels.map(index => ({
+                            path: ['hotelCategories', categoryIndex, 'hotels', index],
+                            value: jsong.ref(['hotelsById', reducedArray[index]])
+                        }));
+
+                    return results;
+                }
+                )
+                .reduce((acc, value) => acc.concat(value), []);
+
             return result; 
         }
     },
-    // {
-    //     route:'hotelCategories[{integers:categories}].hotels[{integers:hotels}]',
-    //     get: function(pathSet) {
-    //         let hotelCategories = db.categories.findAll();
-
-    //         console.log('------------');
-    //         console.log('categories', pathSet.categories);
-    //         console.log('hotelIndex', pathSet.hotels);
-
-    //         let result = pathSet.categories.map(key => {
-    //             console.log('...', key);
-    //             console.log('....', hotelCategories[key].name);
-    //             return {
-    //                 path: ['hotelCategories', key, 'name'],
-    //                 value: hotelCategories[key].name
-    //             }
-    //         });
-
-    //         console.log('result', result);
-    //         return result; 
-    //     }
-    // },
     {
         route: 'hotelsById[{keys:ids}].[{keys:props}]',
         get: function(pathSet) {
