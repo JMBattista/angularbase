@@ -11,21 +11,37 @@
         vm.messageCount = 0;
         vm.people = [];
         vm.title = 'Hotels';
+        vm.categories = [];
 
         activate();
 
         function activate() {
-            var promises = [getHotelCategories()];
+            var promises = [
+                getHotelCategories({from: 0, to:3}),
+                getHotelsForCategory(0),
+                getHotelsForCategory(1),
+                getHotelsForCategory(2),
+                getHotelsForCategory(3)
+            ];
+
             return $q.all(promises).then(function() {
                 logger.info('Activated Hotels View');
             });
         }
 
-        function getHotelCategories() {
-            dataservice.getHotelCategories({from: 0, to:3})
+        function getHotelCategories(indices) {
+            return dataservice.getHotelCategories(indices)
                 .then(categories => {
                     vm.categories = categories
                     return vm.categories
+                });
+        }
+
+        function getHotelsForCategory(index) {
+            return dataservice.getHotelsForCategory(index, {from: 0, to: 3})
+                .then(hotels => {
+                    vm.categories[index].hotels = hotels;
+                    return vm.categories;
                 });
         }
     }

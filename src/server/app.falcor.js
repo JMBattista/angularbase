@@ -47,27 +47,29 @@ module.exports = new FalcorRouter([
         get: function(pathSet) {
             let hotelCategories = db.categories.findAll();
 
-            let result = pathSet.categories.map(index => hotelCategories[index].name)
-                .map(category => 
-                    db.hotels
-                        .findAll()
-                        .filter(hotel => hotel.categories.indexOf(category) != -1)
-                )
-                .map((hotels, categoryIndex) => {
-                    let reducedArray = pathSet.hotels
-                            .map(index => hotels.splice(index, 1))
-                            .reduce((acc, value) => acc.concat(value), []);
-                    let results = pathSet.hotels.map(index => ({
-                            path: ['hotelCategories', categoryIndex, 'hotels', index],
-                            value: jsong.ref(['hotelsById', reducedArray[index]])
-                        }));
+            let result = pathSet.categories.map(categoryIndex => {
+                let category = hotelCategories[categoryIndex].name;
 
-                    return results;
-                }
-                )
-                .reduce((acc, value) => acc.concat(value), []);
+                let hotels = db.hotels
+                    .findAll()
+                    .filter(hotel => hotel.categories.indexOf(category) != -1);
 
-            return result; 
+
+                let indexedHotels = pathSet.hotels
+                        .map(index => hotels.splice(index, 1))
+                        .reduce((acc, value) => acc.concat(value), []);
+
+                let results = pathSet.hotels.map(index => ({
+                        path: ['hotelCategories', categoryIndex, 'hotels', index],
+                        value: jsong.ref(['hotelsById', indexedHotels[index]])
+                    }));
+
+                return results;
+
+            })
+            .reduce((acc, value) => acc.concat(value), []);
+
+            return result;
         }
     },
     {
