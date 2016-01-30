@@ -29,38 +29,44 @@ module.exports = new FalcorRouter([
         }
     },
     {
-        route:'hotelCategories[{integers:categories}].name',
+        route:'categories[{integers:categories}].name',
         get: function(pathSet) {
-            let hotelCategories = db.categories.findAll();
+            let categories = db.categories.findAll();
 
             return pathSet.categories.map(category => {
                 return {
-                    path: ['hotelCategories', category, 'name'],
-                    value: hotelCategories[category].name
+                    path: ['categories', category, 'name'],
+                    value: categories[category].name
                 }
             });
 
         }
     },
     {
-        route:'hotelCategories[{integers:categories}].hotels[{integers:hotels}]',
+        route:'categories[{integers:categories}].hotels[{integers:hotels}]',
         get: function(pathSet) {
-            let hotelCategories = db.categories.findAll();
+            let categories = db.categories.findAll();
+
+            console.log('---------------');
+            console.log('categories', pathSet.categories);
+            console.log('hotels', pathSet.hotels);
 
             let result = pathSet.categories.map(categoryIndex => {
-                let category = hotelCategories[categoryIndex].name;
+                let category = categories[categoryIndex].name;
 
                 let hotels = db.hotels
                     .findAll()
-                    .filter(hotel => hotel.categories.indexOf(category) != -1);
-
+                    .filter(hotel => hotel.categories.indexOf(category) != -1)
+                    .map(hotel => hotel.id);
 
                 let indexedHotels = pathSet.hotels
                         .map(index => hotels.splice(index, 1))
                         .reduce((acc, value) => acc.concat(value), []);
 
+                console.log('indexedHotels', indexedHotels);
+
                 let results = pathSet.hotels.map(index => ({
-                        path: ['hotelCategories', categoryIndex, 'hotels', index],
+                        path: ['categories', categoryIndex, 'hotels', index],
                         value: jsong.ref(['hotelsById', indexedHotels[index]])
                     }));
 

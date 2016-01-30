@@ -38,7 +38,7 @@
         }
 
         function getHotelsForCategory(index) {
-            return hotelService.getHotelsForCategory(index, {from: 0, to: 100})
+            return hotelService.getHotelsForCategory(index, {from: 0, to: 3})
                 .then(hotels => {
                     vm.categories[index].hotels = hotels;
                     return vm.categories;
