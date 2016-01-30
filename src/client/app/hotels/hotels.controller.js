@@ -6,7 +6,7 @@
         .controller('HotelsController', HotelsController);
 
     /* @ngInject */
-    function HotelsController($q, dataservice, logger) {
+    function HotelsController($q, hotelService, logger) {
         var vm = this;
         vm.messageCount = 0;
         vm.people = [];
@@ -30,7 +30,7 @@
         }
 
         function getHotelCategories(indices) {
-            return dataservice.getHotelCategories(indices)
+            return hotelService.getHotelCategories(indices)
                 .then(categories => {
                     vm.categories = categories
                     return vm.categories
@@ -38,7 +38,7 @@
         }
 
         function getHotelsForCategory(index) {
-            return dataservice.getHotelsForCategory(index, {from: 0, to: 3})
+            return hotelService.getHotelsForCategory(index, {from: 0, to: 100})
                 .then(hotels => {
                     vm.categories[index].hotels = hotels;
                     return vm.categories;
