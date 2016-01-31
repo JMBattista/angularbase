@@ -6,31 +6,116 @@
         .factory('socketservice', socketservice);
 
     /* @ngInject */
-    function socketservice($q, logger, io) {
+    function socketservice($q, logger, io, CHAT_NAMESPACE) {
 
         var service = {
+            getObservableSocket: getObservableSocket,
             getChatSocketId: getChatSocketId,
             send: send,
             listen: listen,
             unlisten: unlisten
         };
 
-        const CHAT_SOCKET = 'chat_socket';
         var sockets = [];
 
         initialize();
 
-        return service;
+        // Move return back to here once ObservableSocket is defined in a different file
+        // return service;
 
         function initialize() {
-            sockets[CHAT_SOCKET] = createInternal('/chat');
-            addServiceListeners(CHAT_SOCKET);
+            sockets[CHAT_NAMESPACE] = new ObservableSocket(CHAT_NAMESPACE, ['message']);
             logger.info('Socket Service Initialized');
+        }
+
+        /*
+         * Observable Socket
+         */
+
+        function ObservableSocket(namespace, contentTypes) {
+            let self = this
+            this.socket = createInternal(namespace);
+
+            this.contentObservable = Rx.Observable.fromArray(contentTypes)
+                .map(type => Rx.Observable.fromEventPattern(
+                    function add(h) { listenInternal(self.socket, type, h); },
+                    function remove(h) { unlistenInternal(self.socket, type, h); },
+                    function select(detail) { return { type: type, detail: detail } })
+                    )
+                .mergeAll();
+
+            let statusEvents = ['connect', 'error', 'disconnect', 'reconnect', 'reconnect_attempt', 'reconnect_error', 'reconnect_failed'];
+            this.statusObservable = Rx.Observable.fromArray(statusEvents)
+                .map(type => Rx.Observable.fromEventPattern(
+                    function add(h) { listenInternal(self.socket, type, h); },
+                    function remove(h) { unlistenInternal(self.socket, type, h); },
+                    function select(detail) { return { type: type, detail: detail } })
+                    )
+                .mergeAll();
+        }
+
+        /*
+         * Retrieves an observable for the content received on the socket
+         */
+        ObservableSocket.prototype.getContent = function getContent() {
+            return this.contentObservable;
+        }
+
+        ObservableSocket.prototype.getStatus = function getStatus() {
+            return this.statusObservable;
+        }
+
+        ObservableSocket.prototype.send = function sendTemp(type, data, reqAck = true, timeout = 0) {
+            var deferred = $q.defer();
+            var resolved = false;
+
+            try {
+                var socket = this.socket;
+
+                if (reqAck) {
+                    sendInternal(socket, type, data, function (ackData) {
+                        if (!resolved) {
+                            resolved = true;
+                            deferred.resolve(ackData);
+                        }
+                    });
+
+                    if (typeof (timeout) === 'number' && !isNaN(timeout)) {
+                        setTimeout(function () {
+                            if (!resolved) {
+                                resolved = true;
+                                deferred.reject('timeout');
+                            }
+                        }, timeout);
+                    }
+                }
+                else {
+                    sendInternal(socket, type, data);
+
+                    if (!resolved) {
+                        resolved = true;
+                        deferred.resolve('');
+                    }
+                }
+            }
+            catch (error) {
+                logger.error('Socket send error: ' + error);
+                if (!resolved) {
+                    resolved = true;
+                    deferred.reject(error);
+                }
+            }
+
+            return deferred.promise;
         }
 
         /*
          * Exported Functions
          */
+
+        function getObservableSocket(namespace) {
+            return getSocketById(namespace);
+        }
 
         function getChatSocketId() {
             return CHAT_SOCKET;
@@ -160,36 +245,6 @@
          * Private functions
          */
 
-        function addServiceListeners(socketId) {
-            try {
-                var socket = sockets[socketId];
-                listenInternal(socket, 'connect', function () {
-                    logger.info(socketId + ' connected');
-                });
-                listenInternal(socket, 'error', function (error) {
-                    logger.error(socketId + ' error ' + error);
-                });
-                listenInternal(socket, 'disconnect', function () {
-                    logger.warning(socketId + 'disconnected');
-                });
-                listenInternal(socket, 'reconnect', function (attempt) {
-                    logger.info(socketId + ' reconnected after ' + attempt + ' attempts');
-                });
-                listenInternal(socket, 'reconnect_attempt', function (attempt) {
-                    logger.info(socketId + ' attempting reconnection try ' + attempt);
-                });
-                listenInternal(socket, 'reconnect_error', function (error) {
-                    logger.info(socketId + ' reconnection error ' + error);
-                });
-                listenInternal(socket, 'reconnect_failed', function () {
-                    logger.info(socketId + ' reconnection failed');
-                });
-            }
-            catch (error) {
-                logger.error('addServiceListeners ' + error);
-            }
-        }
-
         function getSocketById(socketId) {
             if (socketId in sockets) {
                 return sockets[socketId];
@@ -198,6 +253,8 @@
                 throw Error('Invalid Socket');
             }
         }
+
+        return service;
 
     }
 

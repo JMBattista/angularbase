@@ -6,9 +6,9 @@
         .controller('ChatController', ChatController);
 
     /* @ngInject */
-    function ChatController($rootScope, $q, logger, socketservice) {
+    function ChatController($rootScope, $q, logger, socketservice, CHAT_NAMESPACE) {
 
-        var chatSocketId,
+        let chatSocket,
             vm = this;
         vm.message = '';
         vm.output = '';
@@ -17,8 +17,15 @@
         initialize();
 
         function initialize() {
-            chatSocketId = socketservice.getChatSocketId();
-            socketservice.listen(chatSocketId, 'message', handleReceivedMessage);
+            chatSocket = socketservice.getObservableSocket(CHAT_NAMESPACE);
+
+            chatSocket.getContent()
+                .do(x => console.log(`Recieved ${x.type} with ${x.detail}`))
+                .subscribe(data => handleReceivedMessage(data.detail));
+
+            chatSocket.getStatus()
+                .subscribe(status => console.log(JSON.stringify(status, null, 4)));
+
             logger.info('ChatController Initialized');
         }
 
@@ -27,13 +34,8 @@
          */
 
         function sendMessage() {
-            socketservice.send(chatSocketId, 'message', vm.message)
-                .then(function (ackData) {
-
-                })
-                .catch(function (error) {
-
-                });
+            console.log(`trying to send ${vm.message}`);
+            chatSocket.send('message', vm.message);
 
             addChatMessage(vm.message);
             vm.message = '';
@@ -42,7 +44,7 @@
         /*
          * Private Functions
          */
-        
+
         function handleReceivedMessage(data) {
             $rootScope.$apply(function () {
                 addChatMessage(data);

@@ -1,4 +1,4 @@
-/* global toastr:false, moment:false, falcor:false, io:false */
+/* global toastr:false, moment:false, falcor:false, io:false, Rx:false */
 (function() {
     'use strict';
 
@@ -7,5 +7,7 @@
         .constant('falcor', falcor)
         .constant('io', io)
         .constant('moment', moment)
-        .constant('toastr', toastr);
+        .constant('Rx', Rx)
+        .constant('toastr', toastr)
+        .constant('CHAT_NAMESPACE', '/chat');
 })();
