@@ -3,6 +3,7 @@
 
     angular.module('app.chat', [
         'app.core',
-        'app.widgets'
+        'app.widgets',
+        'blocks.socket'
       ]);
 })();
