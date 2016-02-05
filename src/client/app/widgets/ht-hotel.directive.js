@@ -19,9 +19,17 @@
             restrict: 'E',
             controllerAs: 'hotel',
             bindToController: true,
-            controller: function() {
-            }
+            controller: controller
         };
         return directive;
+    }
+
+    /* @ngInject */
+    function controller($scope, hotelService) {
+        let vm = this;
+        $scope.$watch(
+            () => vm.info.userRating,
+            (newVal) => hotelService.setUserRating(vm.info.id, newVal)
+        );
     }
 })();

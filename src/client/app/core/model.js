@@ -12,14 +12,14 @@
         const $error = falcor.Model.error;
 
         // Comment out the remote model for now
-        const model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')})
+        // const model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')})
         //     .batch();
-        // const model = new falcor.Model({
-        //     cache: {
-        //         categories: getCategories(),
-        //         hotelsById: getHotelsById(),
-        //     }
-        // })
+        const model = new falcor.Model({
+            cache: {
+                categories: getCategories(),
+                hotelsById: getHotelsById(),
+            }
+        })
 
 
         return model;
