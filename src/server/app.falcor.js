@@ -69,10 +69,15 @@ module.exports = new FalcorRouter([
                         .map(index => hotels.splice(index, 1))
                         .reduce((acc, value) => acc.concat(value), []);
 
-                let results = pathSet.hotels.map(index => ({
+                let results = pathSet.hotels.map(index => {
+                    let ref = indexedHotels.length > index ? jsong.ref(['hotelsById', indexedHotels[index]]) : null;
+
+                    return {
                         path: ['categories', categoryIndex, 'hotels', index],
-                        value: jsong.ref(['hotelsById', indexedHotels[index]])
-                    }));
+                        value: ref
+                    };
+
+                });
 
                 return results;
 

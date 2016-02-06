@@ -29,9 +29,12 @@
     function controller(hotelService) {
         let vm = this;
         vm.list = [];
-        hotelService.getHotelsForCategory(vm.category, {from: 0, to: 3})
-            .subscribe(hotels => {
-                vm.list = hotels;
-            });
+
+        /*
+         * We retrieve the first 10 hotels for the category
+         * in a real application we'd want to use paging here to fetch more data
+         */
+        hotelService.getHotelsForCategory(vm.category, {from: 0, to: 10})
+            .subscribe(hotels => vm.list = hotels);
     }
 })();

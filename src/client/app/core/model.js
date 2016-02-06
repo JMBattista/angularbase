@@ -24,6 +24,5 @@
         function onChange() {
             $rootScope.$emit('falcorChange');
         }
-
     }
 })();

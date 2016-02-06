@@ -23,7 +23,15 @@
 
         function getHotelsForCategory(categoryIndex, hotelIndices) {
             return model.get(['categories', categoryIndex, 'hotels', hotelIndices, ['id', 'name', 'rating', 'cost', 'userRating']])
-                .map(response => response.json.categories[categoryIndex].hotels);
+                .map(response => response.json.categories[categoryIndex].hotels)
+                .map(hotels => {
+                    // Purge null results from the list
+                    Object.keys(hotels).forEach(key =>{
+                        if (!hotels[key])
+                            delete hotels[key]
+                    })
+                    return hotels;
+                })
         }
 
         function getHotelCategories(indexes) {
