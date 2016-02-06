@@ -47,10 +47,6 @@ module.exports = new FalcorRouter([
         get: function(pathSet) {
             let categories = db.categories.findAll();
 
-            console.log('---------------');
-            console.log('categories', pathSet.categories);
-            console.log('hotels', pathSet.hotels);
-
             let result = pathSet.categories.map(categoryIndex => {
                 let category = categories[categoryIndex].name;
 
@@ -89,7 +85,12 @@ module.exports = new FalcorRouter([
                 .reduce((acc, value) => acc.concat(value), []);
 
             return paths;
-            // return {"jsonGraph":{"hotels":{"A":{"cost":"$$","name":"Hotel A","userRating":4},"B":{"cost":"$$","name":"Hotel B"},"C":{"cost":"$$","name":"Hotel C"}}}}
+        },
+    },
+    {
+        route:'hotelsById[{keys:ids}].userRating',
+        set: function(jsonGraph) {
+            console.log('called');
         }
     }
 
