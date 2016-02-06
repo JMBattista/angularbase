@@ -25,6 +25,7 @@
     "angular-animate": "~1.4.2",
     "falcor": "~0.1.15",
     "socket.io-client": "~1.4.4",
+    "angular-bootstrap": "~1.1.0",
     "rxjs": "~4.0.7"
   },
   "devDependencies": {

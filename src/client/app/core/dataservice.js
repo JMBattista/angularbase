@@ -6,7 +6,7 @@
         .factory('dataservice', dataservice);
 
     /* @ngInject */
-    function dataservice($http, $q, falcor, logger) {
+    function dataservice($http, $q, model, logger) {
         var service = {
             getPeople: getPeople,
             getMessageCount: getMessageCount,
@@ -34,8 +34,6 @@
         }
 
         function getNews() {
-            var model = new falcor.Model({source: new falcor.HttpDataSource('/model.json')});
-
             return model.get('news')
                 .then(response => ({
                     title: 'News',

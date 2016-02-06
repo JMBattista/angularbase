@@ -4,15 +4,14 @@
 var router = require('koa-router')();
 var falcorKoa = require('falcor-koa');
 var fs = require('fs');
+var db = require('./db.js');
 
 // Import the Falcor configuration and use it for requests to model.json
 router.all('/model.json', falcorKoa.dataSourceRoute(require('./app.falcor.js')));
 
 
 router.get('/api/people', function*() {
-    let path = __dirname + '/data/people.json';
-
-    this.body = yield readFileThunk(path);
+    this.body = db.people.findAll();
 })
 
 // Handle references to app (bad template)

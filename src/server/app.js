@@ -15,7 +15,10 @@ var environment = process.env.NODE_ENV;
 
 app.use(gzip());
 
-// Set the 
+// Use body parser to parse the request body
+app.use(require('koa-bodyparser')());
+
+// Set the
 app.use(function *pageNotFound(next){
   yield next;
 

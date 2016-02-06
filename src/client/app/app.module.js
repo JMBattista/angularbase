@@ -6,6 +6,7 @@
         'app.admin',
         'app.dashboard',
         'app.chat',
+        'app.hotels',
         'app.layout'
     ]);
 })();

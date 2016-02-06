@@ -3,7 +3,9 @@ var mockData = (function() {
     return {
         getMockPeople: getMockPeople,
         getMockStates: getMockStates,
-        getMockNews: getMockNews
+        getMockNews: getMockNews,
+        getMockCategories: getMockCategories,
+        getMockHotels: getMockHotels
     };
 
     function getMockStates() {
@@ -39,6 +41,68 @@ var mockData = (function() {
         return {
             title: 'News',
             description: 'This is news!'
+        }
+    }
+
+    function getMockCategories() {
+        return {
+            "0": {
+                name: "Popular"
+            },
+            "1": {
+                name: 'Beach Front'
+            },
+            "2": {
+                name: 'On Sale'
+            },
+            "3": {
+                name: 'All Inclusive'
+            }
+        }
+    }
+
+    function getMockHotels() {
+        return {
+                "A": {
+                    "id": "A",
+                    "name": "Hotel A",
+                    "cost": "$$",
+                    "rating": 4,
+                    "userRating": null,
+                    "categories": ["Popular", "Beach Front", "On Sale", "All Inclusive"]
+                },
+                "B": {
+                    "id": "B",
+                    "name": "Hotel B",
+                    "cost": "$$",
+                    "rating": 4,
+                    "userRating": null,
+                    "categories": ["Popular", "All Inclusive"]
+                },
+                "C": {
+                    "id": "C",
+                    "name": "Hotel C",
+                    "cost": "$$",
+                    "rating": 4,
+                    "userRating": null,
+                    "categories": ["Popular", "On Sale"]
+                },
+                "D": {
+                    "id": "D",
+                    "name": "Hotel D",
+                    "cost": "$$",
+                    "rating": 4,
+                    "userRating": null,
+                    "categories": ["On Sale", "Beach Front"]
+                },
+                "E": {
+                    "id": "E",
+                    "name": "Hotel E",
+                    "cost": "$$",
+                    "rating": 4,
+                    "userRating": null,
+                    "categories": ["On Sale", "Beach Front"]
+                },
         }
     }
 })();

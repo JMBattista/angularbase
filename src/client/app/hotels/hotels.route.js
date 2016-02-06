@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.admin')
+        .module('app.hotels')
         .run(appRun);
 
     /* @ngInject */
@@ -13,16 +13,16 @@
     function getStates() {
         return [
             {
-                state: 'admin',
+                state: 'hotels',
                 config: {
-                    url: '/admin',
-                    templateUrl: '/app/admin/admin.html',
-                    controller: 'AdminController',
+                    url: '/',
+                    templateUrl: '/app/hotels/hotels.html',
+                    controller: 'HotelsController',
                     controllerAs: 'vm',
-                    title: 'Admin',
+                    title: 'Hotel',
                     settings: {
-                        nav: 100,
-                        content: '<i class="fa fa-lock"></i> Admin'
+                        nav: 1,
+                        content: '<i class="fa fa-bed"></i> Hotels'
                     }
                 }
             }
