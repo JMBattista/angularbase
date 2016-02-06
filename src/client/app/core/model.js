@@ -3,10 +3,10 @@
 
     angular
         .module('app.core')
-        .factory('model', dataservice);
+        .factory('model', modelFactory);
 
     /* @ngInject */
-    function dataservice(falcor, logger) {
+    function modelFactory($rootScope, falcor, logger) {
         const $ref = falcor.Model.ref;
         const $atom = falcor.Model.atom;
         const $error = falcor.Model.error;
@@ -18,11 +18,16 @@
             cache: {
                 categories: getCategories(),
                 hotelsById: getHotelsById(),
-            }
+            },
+            onChange: onChange
         })
 
 
         return model;
+
+        function onChange() {
+            $rootScope.$emit('falcorChange');
+        }
 
         function getCategories() {
             let categories = [

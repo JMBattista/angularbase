@@ -5,13 +5,20 @@
         .module('app.hotels')
         .factory('hotelService', hotelService);
 
+    const observers = [];
+
     /* @ngInject */
-    function hotelService(model, logger) {
+    function hotelService($rootScope, model, logger) {
         var service = {
             getHotelCategories: wrap(getHotelCategories),
             getHotelsForCategory: wrap(getHotelsForCategory),
             setUserRating: setUserRating
         };
+
+        $rootScope.$on('falcorChange', () => {
+            console.log('changed');
+            // observers.forEach((func) => func());
+        });
 
         return service;
 
@@ -26,7 +33,8 @@
         }
 
         function setUserRating(hotelId, rating) {
-            return model.setValue(['hotelsById', hotelId, 'userRating'], rating);
+            return model.setValue(['hotelsById', hotelId, 'userRating'], rating)
+                .subscribe();
         }
 
         /*
@@ -35,10 +43,12 @@
          */
         function wrap(func) {
             return function wrapper(...args) {
-                return Rx.Observable.create((observer) => {
-                    func(...args)
-                        .subscribe((result) => observer.onNext(result));
-                })
+                let observable = Rx.Observable.create((observer) => {
+                    observers.push(() => func(...args).subscribe((result) => observer.onNext(result)));
+                    observers[observers.length-1]();
+                });
+
+                return observable;
             }
         }
     }
