@@ -18,7 +18,7 @@
         return model;
 
         function comparator(oldVal, newVal) {
-            return oldVal != newVal;
+            return oldVal !== newVal;
         }
 
         function onChange() {

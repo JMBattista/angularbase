@@ -8,7 +8,7 @@
     const observers = [];
 
     /* @ngInject */
-    function hotelService($rootScope, model, logger) {
+    function hotelService($rootScope, model, logger, Rx) {
         var service = {
             getHotelCategories: getHotelCategories,
             getHotelsForCategory: wrap(getHotelsForCategory),
@@ -22,16 +22,18 @@
         return service;
 
         function getHotelsForCategory(categoryIndex, hotelIndices) {
-            return model.get(['categories', categoryIndex, 'hotels', hotelIndices, ['id', 'name', 'rating', 'cost', 'userRating']])
+            return model.get(['categories', categoryIndex, 'hotels', hotelIndices,
+                    ['id', 'name', 'rating', 'cost', 'userRating']])
                 .map(response => response.json.categories[categoryIndex].hotels)
                 .map(hotels => {
                     // Purge null results from the list
-                    Object.keys(hotels).forEach(key =>{
-                        if (!hotels[key])
-                            delete hotels[key]
-                    })
+                    Object.keys(hotels).forEach(key => {
+                        if (!hotels[key]) {
+                            delete hotels[key];
+                        }
+                    });
                     return hotels;
-                })
+                });
         }
 
         function getHotelCategories(indexes) {
@@ -51,12 +53,15 @@
         function wrap(func) {
             return function wrapper(...args) {
                 let observable = Rx.Observable.create((observer) => {
-                    observers.push(() => func(...args).subscribe((result) => observer.onNext(result)));
-                    observers[observers.length-1]();
+                    observers.push(() =>
+                        func(...args)
+                            .subscribe((result) => observer.onNext(result))
+                    );
+                    observers[observers.length - 1]();
                 });
 
                 return observable;
-            }
+            };
         }
     }
 })();

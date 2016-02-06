@@ -27,6 +27,7 @@
 
     /* @ngIngject */
     function controller(hotelService) {
+        /*jshint validthis: true */
         let vm = this;
         vm.list = [];
 

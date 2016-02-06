@@ -26,15 +26,17 @@
 
     /* @ngInject */
     function controller($scope, hotelService) {
+        /*jshint validthis: true */
         let vm = this;
         $scope.$watch(
             () => vm.info.userRating,
             (newVal, oldVal) => {
                 // Truthy values ok here since 0/null/nan all show as 0 stars.
-                if (newVal != oldVal) {
-                    hotelService.setUserRating(vm.info.id, newVal)
+                if (newVal != oldVal) { // jshint ignore:line
+                    hotelService.setUserRating(vm.info.id, newVal);
                 }
             }
         );
     }
 })();
+

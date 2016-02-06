@@ -7,6 +7,7 @@
 
     /* @ngInject */
     function HotelsController($q, hotelService, logger) {
+        /*jshint validthis: true */
         var vm = this;
         vm.messageCount = 0;
         vm.people = [];
@@ -28,8 +29,8 @@
         function getHotelCategories(indices) {
             return hotelService.getHotelCategories(indices)
                 .subscribe(categories => {
-                    vm.categories = categories
-                    return vm.categories
+                    vm.categories = categories;
+                    return vm.categories;
                 });
         }
     }
