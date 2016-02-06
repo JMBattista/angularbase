@@ -14,7 +14,7 @@
         var directive = {
             scope: {
                 'title': '@',
-                'list': '=hotels'
+                'category': '@'
             },
             templateUrl: '/app/widgets/ht-hotels-list.html',
             restrict: 'E',
@@ -26,7 +26,15 @@
     }
 
     /* @ngIngject */
-    function controller($element) {
+    function controller($element, hotelService) {
+        let vm = this;
+        vm.list = [];
+        let observer = hotelService.getHotelsForCategory(vm.category, {from: 0, to: 3})
+            .subscribe(hotels => {
+                console.log('updated hotels', hotels);
+                vm.list = hotels;
+            });
+
         // The inner directives haven't been compiled yet. We need to wait until the current op is done.
         setTimeout(hookUpOwl, 0);
 

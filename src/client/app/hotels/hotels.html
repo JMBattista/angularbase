@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <ht-hotels-list title="{{category.name}}" hotels="category.hotels" ng-repeat="category in vm.categories"></ht-hotels-list>
+                    <ht-hotels-list title="{{category.name}}" category="{{key}}" ng-repeat="(key, category) in vm.categories"></ht-hotels-list>
                 </div>
             </div>
         </div>

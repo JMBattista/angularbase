@@ -10,19 +10,21 @@
     /* @ngInject */
     function hotelService($rootScope, model, logger) {
         var service = {
-            getHotelCategories: wrap(getHotelCategories),
+            getHotelCategories: getHotelCategories,
             getHotelsForCategory: wrap(getHotelsForCategory),
             setUserRating: setUserRating
         };
 
         $rootScope.$on('falcorChange', () => {
             console.log('changed');
-            // observers.forEach((func) => func());
+            observers.forEach((func) => func());
         });
 
         return service;
 
         function getHotelsForCategory(categoryIndex, hotelIndices) {
+            console.log('getting categories');
+
             return model.get(['categories', categoryIndex, 'hotels', hotelIndices, ['id', 'name', 'rating', 'cost', 'userRating']])
                 .map(response => response.json.categories[categoryIndex].hotels);
         }

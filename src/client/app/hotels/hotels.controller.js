@@ -18,10 +18,6 @@
         function activate() {
             var promises = [
                 getHotelCategories({from: 0, to:3}),
-                getHotelsForCategory(0),
-                getHotelsForCategory(1),
-                getHotelsForCategory(2),
-                getHotelsForCategory(3)
             ];
 
             return $q.all(promises).then(function() {
@@ -34,14 +30,6 @@
                 .subscribe(categories => {
                     vm.categories = categories
                     return vm.categories
-                });
-        }
-
-        function getHotelsForCategory(index) {
-            return hotelService.getHotelsForCategory(index, {from: 0, to: 3})
-                .subscribe(hotels => {
-                    vm.categories[index].hotels = hotels;
-                    return vm.categories;
                 });
         }
     }
