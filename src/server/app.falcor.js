@@ -1,9 +1,6 @@
 /*jshint node:true*/
 'use strict';
 
-var domain = require('domain');
-var d = domain.create();
-
 var jsong = require('falcor-json-graph');
 var FalcorRouter = require('falcor-router');
 var db = require('./db.js');
