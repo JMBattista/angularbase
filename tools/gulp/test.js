@@ -13,7 +13,7 @@ gulp.task('server-test', function () {
 
 gulp.task('client-test', ['lint'], function (done) {
     new Server({
-        configFile: __dirname + '/../karma.conf.js',
+        configFile: __dirname + '/../../karma.conf.js',
         singleRun: true
     }, done).start();
 });
