@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    config = require('../gulp.config')(),
+    config = require('../../gulp.config')(),
      watch = require('gulp-watch'),
     useref = require('gulp-useref'),
     gulpif = require('gulp-if'),

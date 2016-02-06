@@ -1,7 +1,7 @@
 // Define Task for 'REV'
 var gulp       = require('gulp');
 var watch      = require('gulp-watch');
-var config     = require('../gulp.config')();
+var config     = require('../../gulp.config')();
 var jshint     = require('gulp-jshint');
 var Server     = require('karma').Server;
 var mocha      = require('gulp-mocha');

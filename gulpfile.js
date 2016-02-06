@@ -3,8 +3,8 @@ var fs = require('fs')
 var gulp = require('gulp')
 var config = require('./gulp.config')();
 
-fs.readdirSync(__dirname + '/gulp').forEach(function (module) {
-    require(__dirname + '/gulp/' + module)
+fs.readdirSync(__dirname + '/tools/gulp').forEach(function (module) {
+    require(__dirname + '/tools/gulp/' + module)
 });
 
 /** Update these based on which style tech you use */

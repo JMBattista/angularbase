@@ -1,6 +1,6 @@
 // Define Task for compressing CSS
 var gulp       = require('gulp');
-var config = require('../gulp.config')();
+var config = require('../../gulp.config')();
 var watch = require('gulp-watch');
 var concat     = require('gulp-concat');
 var cssnano  = require('gulp-cssnano');

@@ -1,5 +1,5 @@
 var gulp       = require('gulp');
-var config     = require('../gulp.config')();
+var config     = require('../../gulp.config')();
 var watch      = require('gulp-watch');
 var concat     = require('gulp-concat');
 var ngAnnotate = require('gulp-ng-annotate');
