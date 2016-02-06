@@ -6,7 +6,7 @@
         .service('ObservableSocket', constructor);
 
     /* @ngInject */
-    function constructor($q, logger, io) {
+    function constructor($q, logger, io, Rx, SOCKET_EVENT) {
 
         init();
 
@@ -20,40 +20,25 @@
             let self = this
             this.socket = createInternal(namespace);
 
-            this.contentObservable = Rx.Observable.fromArray(contentTypes)
+            this.content = Rx.Observable.fromArray(contentTypes)
                 .map(type => Rx.Observable.fromEventPattern(
                     function add(h) { listenInternal(self.socket, type, h); },
                     function remove(h) { unlistenInternal(self.socket, type, h); },
-                    function select(detail) { return { type: type, detail: detail } })
+                    function select(data) { return { type: type, data: data } })
                     )
                 .mergeAll();
 
-            let statusEvents = ['connect', 'error', 'disconnect', 'reconnect', 'reconnect_attempt', 'reconnect_error', 'reconnect_failed'];
-            this.statusObservable = Rx.Observable.fromArray(statusEvents)
+            this.status = Rx.Observable.fromArray(SOCKET_EVENT.ALL)
                 .map(type => Rx.Observable.fromEventPattern(
                     function add(h) { listenInternal(self.socket, type, h); },
                     function remove(h) { unlistenInternal(self.socket, type, h); },
-                    function select(detail) { return { type: type, detail: detail } })
+                    function select(data) { return { type: type, data: data } })
                     )
                 .mergeAll();
         }
 
         function init() {
-            ObservableSocket.prototype.getContent = getContent;
-            ObservableSocket.prototype.getStatus = getStatus;
             ObservableSocket.prototype.send = send;
-        }
-
-        /*
-         * Retrieves an observable for the content received on the socket
-         */
-
-        function getContent() {
-            return this.contentObservable;
-        }
-
-        function getStatus() {
-            return this.statusObservable;
         }
 
         function send(type, data, reqAck = true, timeout = 0) {
@@ -100,12 +85,12 @@
             return deferred.promise;
         }
 
-       /*
-        * Websocket Library Wrapper Functions
-        * This is a very thin wrapper around the socket.io library so that, should we want to replace it,
-        * we need only modify these functions and not deal with the complicated logic of send or similar
-        * functions.
-        */
+        /*
+         * Websocket Library Wrapper Functions
+         * This is a very thin wrapper around the socket.io library so that, should we want to replace it,
+         * we need only modify these functions and not deal with the complicated logic of send or similar
+         * functions.
+         */
 
         function createInternal(namespace) {
             return io.connect(namespace);

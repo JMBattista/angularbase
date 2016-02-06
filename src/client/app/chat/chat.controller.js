@@ -19,11 +19,11 @@
         function initialize() {
             chatSocket = socketservice.getObservableSocket(CHAT_NAMESPACE);
 
-            chatSocket.getContent()
-                .do(x => console.log(`Recieved ${x.type} with ${x.detail}`))
-                .subscribe(data => handleReceivedMessage(data.detail));
+            chatSocket.content
+                .do(x => console.log(`Recieved ${x.type} with ${x.data}`))
+                .subscribe(data => handleReceivedMessage(data.data));
 
-            chatSocket.getStatus()
+            chatSocket.status
                 .subscribe(status => console.log(JSON.stringify(status, null, 4)));
 
             logger.info('ChatController Initialized');
