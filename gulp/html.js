@@ -9,8 +9,8 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     using = require('gulp-using'),
     filter = require('gulp-filter'),
-    minifyCss  = require('gulp-minify-css'),
-    minifyHTML = require('gulp-minify-html'),
+    cssnano  = require('gulp-cssnano'),
+    htmlmin = require('gulp-htmlmin'),
     templateCache = require('gulp-angular-templatecache');
 
 gulp.task('html', function() {
@@ -34,7 +34,7 @@ function processIndex() {
         .pipe(plumber())
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
-        .pipe(gulpif('*.css', minifyCss()))
+        .pipe(gulpif('*.css', cssnano()))
         .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest(config.dest))
@@ -50,9 +50,5 @@ function processPartials() {
 }
 
 function getHtmlMinify() {
-    return minifyHTML({
-                empty:true,
-                spare:true,
-                quotes:true,
-                });
+    return htmlmin({collapseWhitespace: true});
 }
