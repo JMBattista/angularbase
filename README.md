@@ -117,12 +117,14 @@ Easily add Continuous Integration Support with [Codeship](http://codeship.io).
 Once you're created a project configure the setup as
 ```shell
 nvm install 4.0
-npm run-script setup
+npm run setup
 ```
 
-And then configure the test execution ass
+And then configure the test execution as
 ```shell
-npm run build.test
+npm run build.dev
+npm run test.server
+npm run test.client
 ```
 
 ## Enjoy!
