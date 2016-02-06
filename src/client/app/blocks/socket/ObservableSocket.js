@@ -17,72 +17,76 @@
          */
 
         function ObservableSocket(namespace, contentTypes) {
-            let self = this
-            this.socket = createInternal(namespace);
+            var socket = createInternal(namespace);
+            
+            this.content = createObservable(socket, contentTypes);
+            this.status = createObservable(socket, SOCKET_EVENT.ALL)
 
-            this.content = Rx.Observable.fromArray(contentTypes)
-                .map(type => Rx.Observable.fromEventPattern(
-                    function add(h) { listenInternal(self.socket, type, h); },
-                    function remove(h) { unlistenInternal(self.socket, type, h); },
-                    function select(data) { return { type: type, data: data } })
-                    )
-                .mergeAll();
+            this.send = function send(type, data, reqAck = true, timeout = 0) {
+                var deferred = $q.defer();
+                var resolved = false;
 
-            this.status = Rx.Observable.fromArray(SOCKET_EVENT.ALL)
-                .map(type => Rx.Observable.fromEventPattern(
-                    function add(h) { listenInternal(self.socket, type, h); },
-                    function remove(h) { unlistenInternal(self.socket, type, h); },
-                    function select(data) { return { type: type, data: data } })
-                    )
-                .mergeAll();
+                try {
+                    var socket = this.socket;
+
+                    if (reqAck) {
+                        sendInternal(socket, type, data, function (ackData) {
+                            if (!resolved) {
+                                resolved = true;
+                                deferred.resolve(ackData);
+                            }
+                        });
+
+                        if (typeof (timeout) === 'number' && !isNaN(timeout)) {
+                            setTimeout(function () {
+                                if (!resolved) {
+                                    resolved = true;
+                                    deferred.reject('timeout');
+                                }
+                            }, timeout);
+                        }
+                    }
+                    else {
+                        sendInternal(socket, type, data);
+
+                        if (!resolved) {
+                            resolved = true;
+                            deferred.resolve('');
+                        }
+                    }
+                }
+                catch (error) {
+                    logger.error('Socket send error: ' + error);
+                    if (!resolved) {
+                        resolved = true;
+                        deferred.reject(error);
+                    }
+                }
+
+                return deferred.promise;
+            }
         }
 
         function init() {
-            ObservableSocket.prototype.send = send;
         }
-
-        function send(type, data, reqAck = true, timeout = 0) {
-            var deferred = $q.defer();
-            var resolved = false;
-
-            try {
-                var socket = this.socket;
-
-                if (reqAck) {
-                    sendInternal(socket, type, data, function (ackData) {
-                        if (!resolved) {
-                            resolved = true;
-                            deferred.resolve(ackData);
-                        }
-                    });
-
-                    if (typeof (timeout) === 'number' && !isNaN(timeout)) {
-                        setTimeout(function () {
-                            if (!resolved) {
-                                resolved = true;
-                                deferred.reject('timeout');
-                            }
-                        }, timeout);
-                    }
-                }
-                else {
-                    sendInternal(socket, type, data);
-
-                    if (!resolved) {
-                        resolved = true;
-                        deferred.resolve('');
-                    }
-                }
-            }
-            catch (error) {
-                logger.error('Socket send error: ' + error);
-                if (!resolved) {
-                    resolved = true;
-                    deferred.reject(error);
-                }
-            }
-
-            return deferred.promise;
+        
+        /**
+         * Creates an observable from the socket that produces objects whenever there is a socket
+         * event in the provided list.  The object produced is of the form {type, data} where type
+         * is the type of the socket event received and data is any additional received data 
+         * @param {Socket} socket the socket to observe
+         * @param {Array} types an array of socket events to wrap
+         * @returns {Rx.Observable} the created observable
+         */
+        function createObservable(socket, types)
+        {
+            return Rx.Observable.fromArray(types)
+                .map(type => Rx.Observable.fromEventPattern(
+                    function add(h) { listenInternal(socket, type, h); },
+                    function remove(h) { unlistenInternal(socket, type, h); },
+                    function select(data) { return { type: type, data: data } })
+                    )
+                .mergeAll();
         }
 
         /*
