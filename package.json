@@ -10,7 +10,7 @@
     "build.test": "gulp build && gulp test",
     "clean": "gulp clean",
     "postinstall": "tsd install && bower install",
-    "setup": "npm install -g tsd && npm install",
+    "setup": "npm install -g tsd bower && npm install",
     "start": "gulp serve-dev",
     "test": "gulp test",
     "test.client": "gulp client-test",
