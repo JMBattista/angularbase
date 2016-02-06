@@ -29,9 +29,8 @@
     function controller(hotelService) {
         let vm = this;
         vm.list = [];
-        let observer = hotelService.getHotelsForCategory(vm.category, {from: 0, to: 10})
+        hotelService.getHotelsForCategory(vm.category, {from: 0, to: 3})
             .subscribe(hotels => {
-                console.log('updated hotels', hotels);
                 vm.list = hotels;
             });
     }

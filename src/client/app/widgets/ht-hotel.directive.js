@@ -29,7 +29,11 @@
         let vm = this;
         $scope.$watch(
             () => vm.info.userRating,
-            (newVal) => hotelService.setUserRating(vm.info.id, newVal)
+            (newVal, oldVal) => {
+                // Truthy values ok here since 0/null/nan all show as 0 stars.
+                if (newVal != oldVal)
+                    hotelService.setUserRating(vm.info.id, newVal)
+            }
         );
     }
 })();
