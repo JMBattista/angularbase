@@ -9,8 +9,6 @@
     function HotelsController($q, hotelService, logger) {
         /*jshint validthis: true */
         var vm = this;
-        vm.messageCount = 0;
-        vm.people = [];
         vm.title = 'Hotels';
         vm.categories = [];
 
@@ -18,6 +16,10 @@
 
         function activate() {
             var promises = [
+                /*
+                 * We get the first set of categories
+                 * In a real application we would need to perform paging here
+                 */
                 getHotelCategories({from: 0, to:3}),
             ];
 
