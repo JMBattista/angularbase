@@ -13,7 +13,7 @@
             comparator: comparator,
             onChange: onChange
         })
-        //     .batch();
+        .batch();
 
         return model;
 
