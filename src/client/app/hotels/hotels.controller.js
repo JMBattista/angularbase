@@ -31,7 +31,7 @@
 
         function getHotelCategories(indices) {
             return hotelService.getHotelCategories(indices)
-                .then(categories => {
+                .subscribe(categories => {
                     vm.categories = categories
                     return vm.categories
                 });
@@ -39,7 +39,7 @@
 
         function getHotelsForCategory(index) {
             return hotelService.getHotelsForCategory(index, {from: 0, to: 3})
-                .then(hotels => {
+                .subscribe(hotels => {
                     vm.categories[index].hotels = hotels;
                     return vm.categories;
                 });
