@@ -5,7 +5,8 @@
   "author": "John Battista",
   "license": "MIT",
   "scripts": {
-    "setup": "npm install -g gulp bower tsd && npm install && tsd install && bower install",
+    "postinstall": "tsd install && bower install",
+    "setup": "npm install -g tsd && npm install",
     "start": "gulp serve-dev",
     "test": "gulp build && gulp test"
   },
@@ -71,7 +72,7 @@
     "mocha": "^2.2.5",
     "mocha-clean": "^0.4.0",
     "phantomjs": "^1.9.17",
-    "rimraf": "^2.4.2",
+    "rimraf": "^2.5.1",
     "sinon": "^1.15.3",
     "sinon-chai": "^2.8.0",
     "wiredep": "^2.2.2"
