@@ -29,6 +29,11 @@ module.exports = new FalcorRouter([
         }
     },
     {
+        /*
+         * Get the category names.
+         * Normally you'd want a better logic than the order they are stored in db.
+         * ie - a per user top category list that
+         */
         route:'categories[{integers:categories}].name',
         get: function(pathSet) {
             let categories = db.categories.findAll();
@@ -43,6 +48,11 @@ module.exports = new FalcorRouter([
         }
     },
     {
+        /*
+         * Get the list of hotels in a given category.
+         * Again we are simply using the order of simple DB to control the ordering.
+         * In a real application we'd want to use more advanced methods to select our orderings.
+         */
         route:'categories[{integers:categories}].hotels[{integers:hotels}]',
         get: function(pathSet) {
             let categories = db.categories.findAll();
@@ -59,8 +69,6 @@ module.exports = new FalcorRouter([
                         .map(index => hotels.splice(index, 1))
                         .reduce((acc, value) => acc.concat(value), []);
 
-                console.log('indexedHotels', indexedHotels);
-
                 let results = pathSet.hotels.map(index => ({
                         path: ['categories', categoryIndex, 'hotels', index],
                         value: jsong.ref(['hotelsById', indexedHotels[index]])
@@ -75,6 +83,9 @@ module.exports = new FalcorRouter([
         }
     },
     {
+        /*
+         * Get property information for some Hotel
+         */
         route: 'hotelsById[{keys:ids}].[{keys:props}]',
         get: function(pathSet) {
             let paths = pathSet.ids.map(id =>
@@ -88,9 +99,31 @@ module.exports = new FalcorRouter([
         },
     },
     {
+        /*
+         * Update the user rating of the hotel
+         * In this example the hotel is rated by only one user, but in a real application we'd want
+         * to have an aggregate rating as well as each users personal rating.
+         */
         route:'hotelsById[{keys:ids}].userRating',
         set: function(jsonGraph) {
-            console.log('called');
+            let hotels = jsonGraph.hotelsById;
+            let ids = Object.keys(hotels);
+
+            ids.forEach(id => {
+                let hotel = db.hotels.findById(id);
+                hotel.userRating = hotels[id].userRating = coerce(hotels[id].userRating);
+            });
+
+            // Return the post-coercion envelope
+            return jsonGraph;
+
+            function coerce(rating) {
+                if (rating > 5)
+                    return 5;
+                if (rating < 1)
+                    return 1;
+                return rating;
+            }
         }
     }
 

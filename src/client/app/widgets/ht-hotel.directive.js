@@ -31,8 +31,9 @@
             () => vm.info.userRating,
             (newVal, oldVal) => {
                 // Truthy values ok here since 0/null/nan all show as 0 stars.
-                if (newVal != oldVal)
+                if (newVal != oldVal) {
                     hotelService.setUserRating(vm.info.id, newVal)
+                }
             }
         );
     }

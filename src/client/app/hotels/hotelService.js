@@ -16,15 +16,12 @@
         };
 
         $rootScope.$on('falcorChange', () => {
-            console.log('changed');
             observers.forEach((func) => func());
         });
 
         return service;
 
         function getHotelsForCategory(categoryIndex, hotelIndices) {
-            console.log('getting categories');
-
             return model.get(['categories', categoryIndex, 'hotels', hotelIndices, ['id', 'name', 'rating', 'cost', 'userRating']])
                 .map(response => response.json.categories[categoryIndex].hotels);
         }
