@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var config = require('../gulp.config')();
+var config = require('../../gulp.config')();
 var changed = require('gulp-changed');
 var watch = require('gulp-watch');
 var plumber    = require('gulp-plumber');

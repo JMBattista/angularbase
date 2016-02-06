@@ -1,7 +1,7 @@
 // Define Task for 'REV'
 var gulp       = require('gulp');
 var watch      = require('gulp-watch');
-var config     = require('../gulp.config')();
+var config     = require('../../gulp.config')();
 var jshint     = require('gulp-jshint');
 var Server     = require('karma').Server;
 var mocha      = require('gulp-mocha');
@@ -13,7 +13,7 @@ gulp.task('server-test', function () {
 
 gulp.task('client-test', ['lint'], function (done) {
     new Server({
-        configFile: __dirname + '/../karma.conf.js',
+        configFile: __dirname + '/../../karma.conf.js',
         singleRun: true
     }, done).start();
 });

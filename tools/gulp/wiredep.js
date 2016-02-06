@@ -1,6 +1,6 @@
 // Define Task for 'REV'
 var gulp = require('gulp');
-var config = require('../gulp.config')();
+var config = require('../../gulp.config')();
 
 gulp.task('wiredep', ['wiredep:script', 'wiredep:style']);
 
