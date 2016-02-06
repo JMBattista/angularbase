@@ -8,12 +8,14 @@
     "build.dev": "gulp build",
     "build.dev.watch": "gulp watch",
     "build.test": "gulp build && gulp test",
+    "clean": "gulp clean",
     "postinstall": "tsd install && bower install",
     "setup": "npm install -g tsd && npm install",
     "start": "gulp serve-dev",
     "test": "gulp test",
     "test.client": "gulp client-test",
-    "test.server": "gulp server-test"
+    "test.server": "gulp server-test",
+    "test.watch": "gulp autotest"
   },
   "dependencies": {
     "falcor-json-graph": "^1.1.7",
