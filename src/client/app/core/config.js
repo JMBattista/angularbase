@@ -5,7 +5,6 @@
 
     core.config(toastrConfig);
 
-    toastrConfig.$inject = ['toastr'];
     /* @ngInject */
     function toastrConfig(toastr) {
         toastr.options.timeOut = 4000;
@@ -13,15 +12,14 @@
     }
 
     var config = {
-        appErrorPrefix: '[example Error] ',
-        appTitle: 'example'
+        appErrorPrefix: '[HotTowel Error] ',
+        appTitle: 'HotTowel'
     };
 
     core.value('config', config);
 
     core.config(configure);
 
-    configure.$inject = ['$logProvider', 'routerHelperProvider', 'exceptionHandlerProvider'];
     /* @ngInject */
     function configure($logProvider, routerHelperProvider, exceptionHandlerProvider) {
         if ($logProvider.debugEnabled) {

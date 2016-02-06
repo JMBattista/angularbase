@@ -7,8 +7,6 @@ gulp.task('wiredep', ['wiredep:script', 'wiredep:style']);
 gulp.task('wiredep:style', function() {
     var wiredep = require('wiredep').stream;
     var options = config.wiredep();
-    
-   var sources = gulp.src("**/*.css", {read: false});
 
    return gulp
         .src(config.index)
@@ -20,8 +18,6 @@ gulp.task('wiredep:style', function() {
 gulp.task('wiredep:script', function() {
     var wiredep = require('wiredep').stream;
     var options = config.wiredep();
-    
-   var sources = gulp.src(config.clientSource, {read: false});
 
    return gulp
         .src(config.index)

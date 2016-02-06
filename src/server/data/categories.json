@@ -1,0 +1,18 @@
+[
+	{
+		"id": 1,
+		"name": "Popular"
+	},
+	{
+		"id": 2,
+		"name": "Beach Front"
+	},
+	{
+		"id": 3,
+		"name": "All Inclusive"
+	},
+	{
+		"id": 4,
+		"name": "On Sale"
+	}
+]

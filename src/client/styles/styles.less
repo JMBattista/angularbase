@@ -1,9 +1,12 @@
 @color_lightblue: #52b9e9;
 @color_blue: #1171a3;
+@color_lightgrey: #f2f2f2;
+@color_grey: #888;
 @color_success: #43c83c;
 @color_warning: #f88529;
 @color_important: #fa3031;
 @color_violet: #932ab6;
+
 
 * {
     /*-webkit-box-shadow: none !important;
@@ -990,6 +993,83 @@ form {
     .widget .tab-content {
         margin-bottom: 10px;
     }
+
+/* Tiles */
+.tile {
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+    width: 200px;
+    max-width: 200px;
+    max-height: 150px;
+    min-height: 150px;
+}
+
+/* Rating Lists */
+.rating-list-container {
+    max-height: 200px;
+    margin-bottom: 10px;
+    width: 100%;
+
+    .header {
+        font-weight: bold;
+        padding-left: 10px;
+        padding-bottom: 5px;
+    }
+}
+
+
+
+
+.rating-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+    .rating-list li {
+        display: inline-block;
+        margin-bottom: 5px;
+        margin-right: 10px;
+        padding: 1.5em 1em;
+        background-color: #f8f8f8;
+        background: #f8f8f8;
+        border: 1px solid #ccc;
+        min-width: 200px;
+        max-width: 200px;
+        min-height: 120px;
+        max-height: 120px;
+        text-align: center;
+    }
+
+        .rating-list li .spark {
+            margin-right: 10px;
+        }
+
+        .rating-list li .rating-text {
+            font-size: 13px;
+            padding: 7px 0 0 0;
+            font-weight: normal;
+        }
+
+            .rating-list li .rating-text span {
+                display: block;
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+
+        .rating-list li .dial {
+            margin-right: 10px !important;
+        }
+
+        .user-rating i {
+            font-size: 25px;
+            margin-right: 5px;
+        }
 
 /* Today datas */
 
