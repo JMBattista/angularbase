@@ -38,7 +38,7 @@ input, select {
     background-image: none !important;
     -webkit-text-shadow: none !important;
     -ms-text-shadow: none !important;
-    text-shadow: none !import7ant;
+    text-shadow: none !important;
 }
 
 form * {
@@ -1017,8 +1017,24 @@ form {
         padding-bottom: 5px;
     }
 }
-    .rating-list-container div.rating {
-        margin: 10px;
+
+
+
+
+.rating-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+    .rating-list li {
+        display: inline-block;
+        margin-bottom: 5px;
+        margin-right: 10px;
         padding: 1.5em 1em;
         background-color: #f8f8f8;
         background: #f8f8f8;
@@ -1030,27 +1046,27 @@ form {
         text-align: center;
     }
 
-        .rating-list-container div.ratingi .spark {
+        .rating-list li .spark {
             margin-right: 10px;
         }
 
-        .rating-list-container div.rating .rating-text {
+        .rating-list li .rating-text {
             font-size: 13px;
             padding: 7px 0 0 0;
             font-weight: normal;
         }
 
-            .rating-list-container div.rating .rating-text span {
+            .rating-list li .rating-text span {
                 display: block;
                 font-size: 24px;
                 margin-bottom: 5px;
             }
 
-        .rating-list-container div.rating .dial {
+        .rating-list li .dial {
             margin-right: 10px !important;
         }
 
-        .rating-list-container div.rating .user-rating i {
+        .user-rating i {
             font-size: 25px;
             margin-right: 5px;
         }

@@ -116,7 +116,6 @@ module.exports = function() {
             files: [].concat(
                 bowerFiles,
                 './bower_components/falcor/dist/falcor.browser.js',
-                './bower_components/owlcarousel/owl-carousel/owl.carousel.js',
                 config.specHelpers,
                 clientApp + '**/*.module.js',
                 clientApp + '**/*.js',
