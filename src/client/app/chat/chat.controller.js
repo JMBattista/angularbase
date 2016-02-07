@@ -10,7 +10,6 @@
 
         let chatSocket,
             messagesOut,
-            messagesOutStatus,
             vm = this;
         vm.message = '';
         vm.output = '';
@@ -28,30 +27,19 @@
             chatSocket.status
                 .subscribe(status => console.log(JSON.stringify(status, null, 4)));
 
-            messagesOut = new Rx.Subject();
-            messagesOutStatus = chatSocket.addInput(messagesOut, 'message');
-
-            messagesOutStatus.subscribe(
+            chatSocket.sent.subscribe(
                 message => {
-                    console.log(`Observing '${message.data}' for status of send`);
+                    console.log(`Sending '${message.data}'`);
                     message.status.subscribe(
-                        statusUpdate => console.log(`Got status of ${statusUpdate.state} from message '${message.data}'`),
-                        err => { },
+                        ackData => console.log(`Got acknowledgment of ${ackData} for message '${message.data}'`),
+                        err => console.log(`Got error for message '${message.data}'`),
                         () => console.log(`Got complete for message '${message.data}'`)
                         )
                 }
                 );
 
-            chatSocket.sent.subscribe(
-                message => {
-                    console.log(`1Observing '${message.data}' for status of send`);
-                    message.status.subscribe(
-                        statusUpdate => console.log(`1Got status of ${statusUpdate.state} from message '${message.data}'`),
-                        err => { },
-                        () => console.log(`1Got complete for message '${message.data}'`)
-                        )
-                }
-                );
+            messagesOut = new Rx.Subject();
+            chatSocket.watchAndSend(messagesOut, 'message');
 
             logger.info('ChatController Initialized');
         }
@@ -61,7 +49,7 @@
          */
 
         function sendMessage() {
-            console.log(`trying to send ${vm.message}`);
+            console.log(`Trying to send ${vm.message}`);
             messagesOut.onNext(vm.message);
             addChatMessage(vm.message);
             vm.message = '';
