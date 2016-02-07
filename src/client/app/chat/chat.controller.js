@@ -6,9 +6,11 @@
         .controller('ChatController', ChatController);
 
     /* @ngInject */
-    function ChatController($rootScope, $q, logger, socketservice, CHAT_NAMESPACE) {
+    function ChatController($rootScope, $q, logger, Rx, socketservice, CHAT_NAMESPACE) {
 
         let chatSocket,
+            messagesOut,
+            messagesOutStatus,
             vm = this;
         vm.message = '';
         vm.output = '';
@@ -26,6 +28,20 @@
             chatSocket.status
                 .subscribe(status => console.log(JSON.stringify(status, null, 4)));
 
+            messagesOut = new Rx.Subject();
+            messagesOutStatus = chatSocket.addInput(messagesOut, 'message');
+
+            messagesOutStatus.subscribe(
+                message => {
+                    console.log(`Observing ${message.data} for status of send`);
+                    message.status.subscribe(
+                        statusUpdate => console.log(`Got status of ${statusUpdate.state} from message ${message.data}`),
+                        err => { },
+                        () => console.log(`Got complete for message ${message.data}`)
+                        )
+                }
+                );
+
             logger.info('ChatController Initialized');
         }
 
@@ -35,8 +51,7 @@
 
         function sendMessage() {
             console.log(`trying to send ${vm.message}`);
-            chatSocket.send('message', vm.message);
-
+            messagesOut.onNext(vm.message);
             addChatMessage(vm.message);
             vm.message = '';
         }

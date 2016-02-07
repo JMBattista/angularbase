@@ -6,21 +6,22 @@
         .service('ObservableSocket', constructor);
 
     /* @ngInject */
-    function constructor($q, logger, io, Rx, SOCKET_EVENT) {
+    function constructor($q, logger, io, Rx, SOCKET_DEFAULTS, SOCKET_SEND, SOCKET_STATUS) {
 
         init();
 
         return ObservableSocket;
 
         /*
-         * Observable Socket
+         * Creates an ObservableSocket
+         * @param {string} namespace the namespace to which to bind the ObservableSocket
+         * @param {Array} contentTypes the socket events to watch for on this socket
          */
-
         function ObservableSocket(namespace, contentTypes) {
             var socket = createInternal(namespace);
 
             this.content = createObservable(socket, contentTypes);
-            this.status = createObservable(socket, SOCKET_EVENT.ALL)
+            this.status = createObservable(socket, SOCKET_STATUS.ALL)
 
             this.send = function (type, data, reqAck, timeout) {
                 return send(socket, type, data, reqAck, timeout);
@@ -28,6 +29,39 @@
         }
 
         function init() {
+            ObservableSocket.prototype.addInput = addInput;
+        }
+        
+        /**
+         * Watches the provided observable and sends anything received on that observable through the socket as directed
+         * @param {Rx.Observable} input the observable from which to send socket data
+         * @param {string} type the socket event on which to send the data
+         * @param {boolean} reqAck whether to request acknowledgement of receipt or assume receipt if no error produced
+         * @param {Number} timeout the time to wait for acknowledgement before a deemed failure
+         * @returns {Rx.Observable} an observable providing {data, status} objects for each sent message where data is
+         * the sent data and status is an observable of its current status
+         */
+        function addInput(input, type, reqAck = SOCKET_DEFAULTS.REQUIRE_ACKNOWLEDGEMENT, timeout = SOCKET_DEFAULTS.TIMEOUT_MS) {
+            var self = this;
+
+            return input.map(function (data) {
+                return {
+                    data: data,
+                    status: Rx.Observable.concat(
+                        Rx.Observable
+                            .return({ state: SOCKET_SEND.SENDING }),
+                        Rx.Observable
+                            .fromPromise(self.send(type, data, reqAck, timeout))
+                            .map(ackData => {
+                                return { state: SOCKET_SEND.SUCCESS, ackData: ackData }
+                            })
+                            .catch(err => {
+                                logger.info("Observable caught error " + err);
+                                return { state: SOCKET_SEND.FAILED };
+                            })
+                        )
+                }
+            });
         }
         
         /**
@@ -57,7 +91,7 @@
          * @param {Number} timeout the time to wait for acknowledgement before a deemed failure
          * @returns a promise that will be resolved when the transmission has succeed or failed
          */
-        function send(socket, type, data, reqAck = true, timeout = 0) {
+        function send(socket, type, data, reqAck, timeout) {
             var deferred = $q.defer();
             var resolved = false;
 
@@ -74,6 +108,7 @@
                         setTimeout(function () {
                             if (!resolved) {
                                 resolved = true;
+                                logger.warn('Socket send timeout');
                                 deferred.reject('timeout');
                             }
                         }, timeout);
