@@ -21,7 +21,7 @@
         function initialize() {
             chatSocket = socketservice.getObservableSocket(CHAT_NAMESPACE);
 
-            chatSocket.content
+            chatSocket.received
                 .do(x => console.log(`Recieved ${x.type} with ${x.data}`))
                 .subscribe(data => handleReceivedMessage(data.data));
 
@@ -33,11 +33,22 @@
 
             messagesOutStatus.subscribe(
                 message => {
-                    console.log(`Observing ${message.data} for status of send`);
+                    console.log(`Observing '${message.data}' for status of send`);
                     message.status.subscribe(
-                        statusUpdate => console.log(`Got status of ${statusUpdate.state} from message ${message.data}`),
+                        statusUpdate => console.log(`Got status of ${statusUpdate.state} from message '${message.data}'`),
                         err => { },
-                        () => console.log(`Got complete for message ${message.data}`)
+                        () => console.log(`Got complete for message '${message.data}'`)
+                        )
+                }
+                );
+
+            chatSocket.sent.subscribe(
+                message => {
+                    console.log(`1Observing '${message.data}' for status of send`);
+                    message.status.subscribe(
+                        statusUpdate => console.log(`1Got status of ${statusUpdate.state} from message '${message.data}'`),
+                        err => { },
+                        () => console.log(`1Got complete for message '${message.data}'`)
                         )
                 }
                 );

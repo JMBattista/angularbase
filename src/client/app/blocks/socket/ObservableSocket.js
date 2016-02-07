@@ -20,8 +20,9 @@
         function ObservableSocket(namespace, contentTypes) {
             var socket = createInternal(namespace);
 
-            this.content = createObservable(socket, contentTypes);
-            this.status = createObservable(socket, SOCKET_STATUS.ALL)
+            this.received = createObservable(socket, contentTypes);
+            this.status = createObservable(socket, SOCKET_STATUS.ALL);
+            this.sent = new Rx.Subject();
 
             this.send = function (type, data, reqAck, timeout) {
                 return send(socket, type, data, reqAck, timeout);
@@ -44,24 +45,11 @@
         function addInput(input, type, reqAck = SOCKET_DEFAULTS.REQUIRE_ACKNOWLEDGEMENT, timeout = SOCKET_DEFAULTS.TIMEOUT_MS) {
             var self = this;
 
-            return input.map(function (data) {
-                return {
-                    data: data,
-                    status: Rx.Observable.concat(
-                        Rx.Observable
-                            .return({ state: SOCKET_SEND.SENDING }),
-                        Rx.Observable
-                            .fromPromise(self.send(type, data, reqAck, timeout))
-                            .map(ackData => {
-                                return { state: SOCKET_SEND.SUCCESS, ackData: ackData }
-                            })
-                            .catch(err => {
-                                logger.info("Observable caught error " + err);
-                                return { state: SOCKET_SEND.FAILED };
-                            })
-                        )
-                }
-            });
+            return input
+                .map(function (data) {
+                    return { type: type, data: data, status: Rx.Observable.fromPromise(self.send(type, data, reqAck, timeout)) };
+                })
+                .do(message => self.sent.onNext(message));
         }
         
         /**
