@@ -29,7 +29,7 @@ function Attach(namespace)
             socket.broadcast.emit('message', 'Socket' + socket.id + ' sends ' + data);
             
             if (typeof(fn) === 'function')
-                fn('');
+                fn('ack');
         });
     });
 }
