@@ -9,13 +9,6 @@
                 REQUIRE_ACKNOWLEDGEMENT: true
             }
         })())
-        .constant('SOCKET_SEND', (function () {
-            return {
-                FAILED: 'failed',
-                SENDING: 'sending',
-                SUCCESS: 'success'
-            }
-        })())
         .constant('SOCKET_STATUS', (function () {
             let CONNECT = 'connect',
                 ERROR = 'error',
