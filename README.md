@@ -1,3 +1,7 @@
+```diff
+- This AngularJS base package has not been updated since 2016, and I have no intention of updating it at this point.
+```
+
 # Angular Base
 Baseline AngularJS application based on John Papa's HotTowel example.
 https://github.com/johnpapa/generator-hottowel
